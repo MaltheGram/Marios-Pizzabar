@@ -8,9 +8,6 @@ public class Menu {
 
 	public Menu() throws FileNotFoundException {
 		this.pizzas = loadMenu("menu.tsv");
-		Collection<Pizza> otherzas = this.pizzas.values();
-
-
 	}
 
 	public Collection<Pizza> getAllPizzas() { return this.pizzas.values(); }
