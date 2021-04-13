@@ -1,6 +1,13 @@
 import java.util.ArrayList;
 
 public class Order {
+
+    // Features off Order class
+    // Add new pizza(s)
+    // Add comment to order
+    // Pickup time of the order
+    // Total price
+
     String comment;
     int pickUpTime;
     int quantity;
@@ -13,11 +20,6 @@ public class Order {
 
     }
 
-
-    // Add new pizza(s)
-    // Add comment to order
-    // Pickup time of the order
-    // Total price
 
     public String addComment(String comment) {
         return comment;
