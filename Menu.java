@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
 	
@@ -10,7 +8,12 @@ public class Menu {
 
 	public Menu() throws FileNotFoundException {
 		this.pizzas = loadMenu("menu.tsv");
+		Collection<Pizza> otherzas = this.pizzas.values();
+
+
 	}
+
+	public Collection<Pizza> getAllPizzas() { return this.pizzas.values(); }
 	
 	public Pizza getPizza(Integer id) {
 		return this.pizzas.get(id);
