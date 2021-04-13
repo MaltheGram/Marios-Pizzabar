@@ -1,5 +1,3 @@
-package MariosPizza;
-
 public class Pizza {
     public String pizzaName;
     public String pizzaDescription;
