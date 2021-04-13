@@ -1,11 +1,36 @@
 public class Pizza {
-    public String pizzaName;
-    public String pizzaDescription;
-    public double pizzaPrice;
+	
+	private final Integer id;
+	private final String name;
+	private final String description;
+	private final Double price;
+	
+	public Pizza(Integer id, String name, String description, Double price) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Pizza {id=%d, name=%s, description=%s, price=%f}\n", 
+				this.getId(), this.getName(), this.getDescription(), this.getPrice() );
+	}
 
-    public Pizza (String pizzaName, String pizzaDescription, double pizzaPrice){
-        this.pizzaName = pizzaName;
-        this.pizzaDescription = pizzaDescription;
-        this.pizzaPrice = pizzaPrice;
-    }
+	public Integer getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
 }
