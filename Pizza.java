@@ -1,4 +1,3 @@
-
 public class Pizza {
 	
 	private final Integer id;

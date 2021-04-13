@@ -14,5 +14,7 @@ public class PizzaMain {
         System.out.println(menu);
         
         System.out.println(menu.getPizza(6));
+
+        System.out.printf("%-50.50s %-50.50s%n","doot","shit");
     }
 }
