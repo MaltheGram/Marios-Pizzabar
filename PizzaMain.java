@@ -35,7 +35,7 @@ public class PizzaMain {
         System.out.println(addPickUpTime + ", confirmed");
 
         order1.addPizza(menu.getPizza(5), 1);
-        order1.addPizza(menu.getPizza(14),1 );
+        order1.addPizza(menu.getPizza(14),3);
 
         System.out.println(order1.list);
         System.out.println("Total price: " + order1.getTotalPrice() + " DKK");
