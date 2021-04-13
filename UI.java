@@ -1,6 +1,8 @@
+import java.io.FileNotFoundException;
+
 public class UI {
     public static void main(String[] args) {
-        addBorder("waddup","hello","I eat pizza every day brother");
+        addBorder("stuff.getAllPizzas()","I EAT ASS","god damn");
     }
 
     private static int getMaxLength(String... strings) {
