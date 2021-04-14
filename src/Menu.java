@@ -7,7 +7,7 @@ public class Menu {
 	private final Map<Integer, Pizza> pizzas; 
 
 	public Menu() throws FileNotFoundException {
-		this.pizzas = loadMenu("menu.tsv");
+		this.pizzas = loadMenu("resources/menu.tsv");
 	}
 
 	public Collection<Pizza> getAllPizzas() { return this.pizzas.values(); }
