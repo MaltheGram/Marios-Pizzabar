@@ -1,4 +1,4 @@
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,6 +30,19 @@ public class OrderList {
         this.orders.add(order);
 
         return order;
+    }
+
+    public void saveOrderListToDisk(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        for (Order order : this.orders) {
+            bw.write( order.toString() );
+            bw.newLine();
+        }
+
+        bw.close();
+        fw.close();
     }
 
     @Override
