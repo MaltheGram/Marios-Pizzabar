@@ -23,7 +23,7 @@ public class Order {
 
     public void addComment() {
         boolean Exit = false;
-        System.out.println("Add comment");
+        System.out.println("Add comment or \"Quit\" to exit");
         // Keep adding ingredients or getting extra until Quit or quit is typed.
         while (!Exit) {
             comment = sc.nextLine();
