@@ -41,6 +41,10 @@ public class Order {
             list.add(pizza);
         }
     }
+
+    @Override public String toString() {
+        return String.format("Order {pizzas=%s}", this.list);
+    }
 }
 
 
