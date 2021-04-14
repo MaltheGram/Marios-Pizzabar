@@ -14,7 +14,7 @@ public class Pizza {
 	
 	@Override
 	public String toString() {
-		return String.format("Pizza {id=%d, name=%s, description=%s, price=%f}\n", 
+		return String.format("src.Pizza {id=%d, name=%s, description=%s, price=%f}\n",
 				this.getId(), this.getName(), this.getDescription(), this.getPrice() );
 	}
 

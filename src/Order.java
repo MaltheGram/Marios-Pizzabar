@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Order {
 
-    // Features off Order class
+    // Features off src.Order class
     // Add new pizza(s)
     // Add comment to order
     // Pickup time of the order
@@ -15,7 +15,7 @@ public class Order {
 
     ArrayList<Pizza> list = new ArrayList<>();
 
-    // Constructor for Order object
+    // Constructor for src.Order object
     public Order() {
 
     }
