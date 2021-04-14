@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Order {
 
@@ -9,24 +10,42 @@ public class Order {
     // Total price
 
     String comment;
-    int pickUpTime;
-    int quantity;
     double totalPrice;
-
+    Scanner sc = new Scanner(System.in);
+    ArrayList<String> listOfExtras = new ArrayList<>();
     ArrayList<Pizza> list = new ArrayList<>();
 
-    // Constructor for src.Order object
+    // Constructor for Order object
     public Order() {
 
     }
 
 
-    public String addComment(String comment) {
-        return comment;
+    public void addComment() {
+        boolean Exit = false;
+        System.out.println("Add comment");
+        // Keep adding ingredients or getting extra until Quit or quit is typed.
+        while (!Exit) {
+            comment = sc.nextLine();
+            if (comment.contains("add") || comment.contains("Add") || comment.contains("extra") || comment.contains("Extra")) {
+                listOfExtras.add(comment);
+                totalPrice += 10;
+            } else if (comment.equals("Quit") || comment.equals("quit")) {
+                // If the ArrayList is empty, don't print an empty list.
+                Exit = true;
+                if (listOfExtras.isEmpty())
+                System.out.println("Quit comment");
+                // If the list contains something, print it.
+                else
+                System.out.println(listOfExtras + " ja tjak min ven");
+            }
+        }
     }
 
-    public int pickUpTime(int pickUpTime) {
-        return pickUpTime;
+    public void pickUpTime() {
+        System.out.println("Please add pickup time");
+        int pickUpTime = sc.nextInt();
+        System.out.println("Pickup at: " + pickUpTime);
     }
 
     public double getTotalPrice() {
