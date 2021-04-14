@@ -17,19 +17,20 @@ public class PizzaMain {
 
         System.out.printf("%-50.50s %-50.50s%n", "Column 1", "Column 2");
 
-
         // Add loop to keep adding pizzas
 
         Order order1 = new Order();
 
-        order1.addComment();
-        order1.pickUpTime();
-
         order1.addPizza(menu.getPizza(5), 1);
         order1.addPizza(menu.getPizza(14),3);
 
+        order1.addComment();
+        order1.pickUpTime();
+
         System.out.println(order1.list);
         System.out.println("Total price: " + order1.getTotalPrice() + " DKK");
+
+
 
     }
 

@@ -11,6 +11,7 @@ public class Order {
 
     String comment;
     double totalPrice;
+    int pickUpTime;
     Scanner sc = new Scanner(System.in);
     ArrayList<String> listOfExtras = new ArrayList<>();
     ArrayList<Pizza> list = new ArrayList<>();
@@ -20,19 +21,18 @@ public class Order {
 
     }
 
-
     public void addComment() {
-        boolean Exit = false;
+        boolean exit = false;
         System.out.println("Add comment or \"Quit\" to exit");
         // Keep adding ingredients or getting extra until Quit or quit is typed.
-        while (!Exit) {
+        while (!exit) {
             comment = sc.nextLine();
             if (comment.contains("add") || comment.contains("Add") || comment.contains("extra") || comment.contains("Extra")) {
                 listOfExtras.add(comment);
                 totalPrice += 10;
             } else if (comment.equals("Quit") || comment.equals("quit")) {
                 // If the ArrayList is empty, don't print an empty list.
-                Exit = true;
+                exit = true;
                 if (listOfExtras.isEmpty())
                 System.out.println("Quit comment");
                 // If the list contains something, print it.
@@ -41,13 +41,23 @@ public class Order {
             }
         }
     }
+    // Getter for the comment list of extras
+    public ArrayList<String> getCommentList(){
+        return listOfExtras;
+    }
 
     public void pickUpTime() {
         System.out.println("Please add pickup time");
-        int pickUpTime = sc.nextInt();
+        pickUpTime = sc.nextInt();
         System.out.println("Pickup at: " + pickUpTime);
     }
 
+    // Getter for pick up time
+    public int getPickUpTime(){
+        return pickUpTime;
+    }
+
+    // Getter for total price
     public double getTotalPrice() {
         for (Pizza pizza : list) {
             totalPrice += pizza.getPrice();
@@ -60,11 +70,15 @@ public class Order {
             list.add(pizza);
         }
     }
+    // Getter for the list of pizzas
+    public ArrayList<Pizza> getList(){
+        return list;
+    }
+
 
     @Override public String toString() {
         return String.format("Order {pizzas=%s}", this.list);
     }
+
+
 }
-
-
-
