@@ -1,0 +1,23 @@
+public class OrderLineItem {
+    private final Pizza pizza;
+    private final Integer amount;
+    private final String comment;
+
+    public OrderLineItem(Pizza pizza, Integer amount, String comment) {
+        this.pizza = pizza;
+        this.amount = amount;
+        this.comment = comment;
+    }
+
+    public Pizza getPizza() {
+        return pizza;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+}
