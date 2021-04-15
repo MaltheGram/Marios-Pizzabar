@@ -1,8 +1,12 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class PizzaMain {
-    public static void main(String[] args) throws FileNotFoundException {
+
+    static OrderList newList = new OrderList();
+
+    public static void main(String[] args) throws IOException {
         //do stuff
         Menu menu = null;
         try {
@@ -20,14 +24,23 @@ public class PizzaMain {
 
         // Add loop to keep adding pizzas
 
-        Order order1 = new Order();
+        Order order1 = newList.createNewOrder();
+        Order order2 = newList.createNewOrder();
 
         order1.addPizza();
         order1.addComment();
         order1.pickUpTime();
-
-        System.out.println(order1.toString());
         Invoice.printInvoice(order1);
+
+        order2.addPizza();
+        order2.addComment();
+        order2.pickUpTime();
+        Invoice.printInvoice(order2);
+
+
+        newList.saveOrderListToDisk("/Users/malthegram/desktop/fil.txt");
+
+
     }
 
 }

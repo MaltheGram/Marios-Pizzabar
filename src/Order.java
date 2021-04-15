@@ -85,14 +85,16 @@ public class Order {
         while (!exit) {
             String input1;
             String input2;
+
             System.out.println("What pizza");
             input1 = sc.nextLine();
 
-            System.out.println("How many pizzas");
             input2 = sc.nextLine();
+            System.out.println("How many pizzas");
+
 
             if (input1.equals("Quit") || input2.equals("Quit")) {
-                exit = true;
+                    exit = true;
             } else {
                 Pizza tmp = pizzaMenu.get(Integer.parseInt(input1));
                 System.out.println(tmp.getName() + " ok");
@@ -118,6 +120,8 @@ public class Order {
             int currentQuantity = quantity.get(i);
             stringBOI += "x" +currentQuantity + " " + currentPizza + ", ";
         }
+            stringBOI += "\n" + listOfExtras;
+            stringBOI += "\n" + getTotalPrice() + " DKK";
         return stringBOI;
     }
 }
