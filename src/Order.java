@@ -15,9 +15,11 @@ public class Order {
     private double totalPrice;
     private int pickUpTime;
     private final Scanner sc = new Scanner(System.in);
+
+    private final ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
     private final ArrayList<String> listOfExtras = new ArrayList<>();
-    private final ArrayList<Pizza> list = new ArrayList<>();
-    private final ArrayList<Integer> quantity = new ArrayList<>() ;
+    //private final ArrayList<Pizza> list = new ArrayList<>();
+    //private final ArrayList<Integer> quantity = new ArrayList<>() ;
 
     // Constructor for Order object
     public Order() {
@@ -69,8 +71,8 @@ public class Order {
 
     // Getter for total price
     public double getTotalPrice() {
-        for (int i = 0; i< list.size();i++) {
-            totalPrice += list.get(i).getPrice()*quantity.get(i);
+        for (int i = 0; i< listOfOrderLineItems.size();i++) {
+            totalPrice += listOfOrderLineItems.get(i).getPrice()*listOfOrderLineItems.get(i).getAmount();
         }
 
         return totalPrice;
@@ -89,35 +91,40 @@ public class Order {
             System.out.println("What pizza");
             input1 = sc.nextLine();
 
-            input2 = sc.nextLine();
             System.out.println("How many pizzas");
-
+            input2 = sc.nextLine();
 
             if (input1.equals("Quit") || input2.equals("Quit")) {
                     exit = true;
             } else {
-                Pizza tmp = pizzaMenu.get(Integer.parseInt(input1));
-                System.out.println(tmp.getName() + " ok");
-                System.out.println("ok " + input1 + " nr. " + input2+"'s");
+                Pizza pizza = pizzaMenu.get(Integer.parseInt(input1));
+                Integer quantity = Integer.parseInt(input2);
 
-                list.add(tmp);
-                quantity.add(Integer.valueOf(input2));
+                OrderLineItem orderLine = new OrderLineItem(pizza,quantity,"");
+
+                listOfOrderLineItems.add(orderLine);
+
+                //System.out.println(tmp.getName() + " ok");
+                //System.out.println("ok " + input1 + " nr. " + input2+"'s");
+
+                //orderLine.add(tmp);
+                //quantity.add(Integer.valueOf(input2));
                 }
             }
         }
 
 
     // Getter for the list of pizzas
-    public ArrayList<Pizza> getList(){
-        return list;
-    }
+    //public ArrayList<Pizza> getList(){
+    //    return listOfOrderLineItems;
+    //}
 
 
     @Override public String toString() {
         String stringBOI = "";
-        for (int i=0;i<list.size();i++) {
-            String currentPizza = list.get(i).getName();
-            int currentQuantity = quantity.get(i);
+        for (int i=0;i<listOfOrderLineItems.size();i++) {
+            String currentPizza = listOfOrderLineItems.get(i).getPizza().getName();
+            int currentQuantity = listOfOrderLineItems.get(i).getAmount();
             stringBOI += "x" +currentQuantity + " " + currentPizza + ", ";
         }
             stringBOI += "\n" + listOfExtras;
