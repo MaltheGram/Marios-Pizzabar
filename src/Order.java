@@ -11,13 +11,13 @@ public class Order {
     // Pickup time of the order
     // Total price
 
-    String comment;
-    static double totalPrice;
-    static int pickUpTime;
-    Scanner sc = new Scanner(System.in);
-    ArrayList<String> listOfExtras = new ArrayList<>();
-    ArrayList<Pizza> list = new ArrayList<>();
-    ArrayList<Integer> quantity = new ArrayList<>() ;
+    private String comment;
+    private double totalPrice;
+    private int pickUpTime;
+    private final Scanner sc = new Scanner(System.in);
+    private final ArrayList<String> listOfExtras = new ArrayList<>();
+    private final ArrayList<Pizza> list = new ArrayList<>();
+    private final ArrayList<Integer> quantity = new ArrayList<>() ;
 
     // Constructor for Order object
     public Order() {
@@ -116,7 +116,7 @@ public class Order {
         for (int i=0;i<list.size();i++) {
             String currentPizza = list.get(i).getName();
             int currentQuantity = quantity.get(i);
-            stringBOI += "x"+currentQuantity+" "+ currentPizza +", ";
+            stringBOI += "x" +currentQuantity + " " + currentPizza + ", ";
         }
         return stringBOI;
     }

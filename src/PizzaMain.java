@@ -10,6 +10,7 @@ public class PizzaMain {
         } catch (FileNotFoundException e) {
             System.out.println("woops");
         }
+        UI.drawHeader();
         UI.drawMenu();
         System.out.println(menu);
 
@@ -26,9 +27,7 @@ public class PizzaMain {
         order1.pickUpTime();
 
         System.out.println(order1.toString());
-        System.out.println("Total price: " + order1.getTotalPrice() + " DKK");
-
-        //Invoice.printInvoice();
+        Invoice.printInvoice(order1);
     }
 
 }
