@@ -10,7 +10,7 @@ public class Order {
     // Add comment to order
     // Pickup time of the order
     // Total price
-
+    private final boolean isOrderPickedUp = false;
     private String comment;
     private double totalPrice;
     private int pickUpTime;
@@ -71,8 +71,8 @@ public class Order {
 
     // Getter for total price
     public double getTotalPrice() {
-        for (int i = 0; i< listOfOrderLineItems.size();i++) {
-            totalPrice += listOfOrderLineItems.get(i).getPrice()*listOfOrderLineItems.get(i).getAmount();
+        for (OrderLineItem listOfOrderLineItem : listOfOrderLineItems) {
+            totalPrice += listOfOrderLineItem.getPrice();
         }
 
         return totalPrice;
@@ -112,7 +112,6 @@ public class Order {
                 }
             }
         }
-
 
     // Getter for the list of pizzas
     //public ArrayList<Pizza> getList(){
