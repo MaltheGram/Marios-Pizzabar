@@ -21,12 +21,6 @@ public class PizzaMain {
 
         Order order1 = new Order();
 
-        /*
-        order1.addPizza(menu.getPizza(5), 1);
-        order1.addPizza(menu.getPizza(14),3);
-        order1.addPizza(menu.getPizza(5),19);
-
-         */
         order1.addPizza();
         order1.addComment();
         order1.pickUpTime();

@@ -29,7 +29,7 @@ public class Order {
         // Keep adding ingredients or getting extra until Quit or quit is typed.
         while (!exit) {
             comment = sc.nextLine();
-           // if (!comment.startsWith("add") || comment.startsWith("Add") || comment.startsWith("extra") || comment.startsWith("Extra")) {
+           // While () this --> if (!comment.startsWith("add") || comment.startsWith("Add") || comment.startsWith("extra") || comment.startsWith("Extra")) {
                 // System.out.println("Wrong input. Please use \"add\" or \"extra\"");
                 if (comment.startsWith("add") || comment.startsWith("Add") || comment.startsWith("extra") || comment.startsWith("Extra")) {
                 listOfExtras.add(comment);
@@ -57,6 +57,7 @@ public class Order {
     public void pickUpTime() {
         System.out.println("Please add pickup time");
         pickUpTime = sc.nextInt();
+        // Make if pickUpTime > closing time = error
         System.out.println("Pickup at: " + pickUpTime);
     }
 
@@ -79,21 +80,28 @@ public class Order {
 
         boolean exit = false;
 
-        while(!exit) {
+        while (!exit) {
+            String input1;
+            String input2;
             System.out.println("What pizza");
-            int pizzaId = sc.nextInt();
-            Pizza tmp = pizzaMenu.get(pizzaId);
-            System.out.println(tmp.getName() + " ok");
+            input1 = sc.nextLine();
 
             System.out.println("How many pizzas");
-            int amount = sc.nextInt();
+            input2 = sc.nextLine();
 
-            System.out.println(amount + " ok");
+            if (input1.equals("Quit") || input2.equals("Quit")) {
+                exit = true;
+            } else {
+                Pizza tmp = pizzaMenu.get(Integer.parseInt(input1));
+                System.out.println(tmp.getName() + " ok");
+                System.out.println("ok " + input1 + " nr. " + input2+"'s");
 
-            list.add(tmp);
-            exit = true;
+                for (int i = 0; i < input1.length(); i++)
+                    list.add(tmp);
+                }
+            }
         }
-    }
+
 
     // Getter for the list of pizzas
     public ArrayList<Pizza> getList(){
