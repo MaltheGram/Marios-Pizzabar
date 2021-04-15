@@ -127,7 +127,12 @@ public class Order {
             int currentQuantity = listOfOrderLineItems.get(i).getAmount();
             stringBOI += "x" +currentQuantity + " " + currentPizza + ", ";
         }
-            stringBOI += "\n" + listOfExtras;
+        stringBOI += "\n";
+
+        for (int i=0;i<listOfExtras.size();i++) {
+            String currentExtra = listOfExtras.get(i);
+            stringBOI += currentExtra + ", ";
+        }
             stringBOI += "\n" + getTotalPrice() + " DKK";
         return stringBOI;
     }
