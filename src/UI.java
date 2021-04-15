@@ -1,4 +1,6 @@
+import java.io.Console;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class UI {
@@ -15,7 +17,8 @@ public class UI {
     static final int maxOrderListEntryLength = 80; // scale entry list to # characters
 
     //PAGEHEADER SETTINGS
-    static final String pageHeader = """
+    static final String pageHeader =
+            """
             ███╗   ███╗ █████╗ ██████╗ ██╗ ██████╗ ███████╗    ██████╗ ██╗███████╗███████╗ █████╗
             ████╗ ████║██╔══██╗██╔══██╗██║██╔═══██╗██╔════╝    ██╔══██╗██║╚══███╔╝╚══███╔╝██╔══██╗
             ██╔████╔██║███████║██████╔╝██║██║   ██║███████╗    ██████╔╝██║  ███╔╝   ███╔╝ ███████║
@@ -29,6 +32,11 @@ public class UI {
     static final String hPaddingHeader = ".";
 
     public static void main(String[] args) throws FileNotFoundException{
+        drawHeader();
+        drawMenu();
+
+        clearConsole();
+
         drawHeader();
         drawMenu();
     }
@@ -116,5 +124,10 @@ public class UI {
 
         //add border
         addBorder(pizzaEntries,"Menu",hPadding);
+    }
+
+    public static void clear(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
