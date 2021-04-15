@@ -16,7 +16,8 @@ public class Order {
     static int pickUpTime;
     Scanner sc = new Scanner(System.in);
     ArrayList<String> listOfExtras = new ArrayList<>();
-    static ArrayList<Pizza> list = new ArrayList<>();
+    ArrayList<Pizza> list = new ArrayList<>();
+    ArrayList<Integer> quantity = new ArrayList<>() ;
 
     // Constructor for Order object
     public Order() {
@@ -68,9 +69,10 @@ public class Order {
 
     // Getter for total price
     public double getTotalPrice() {
-        for (Pizza pizza : list) {
-            totalPrice += pizza.getPrice();
+        for (int i = 0; i< list.size();i++) {
+            totalPrice += list.get(i).getPrice()*quantity.get(i);
         }
+
         return totalPrice;
     }
 
@@ -96,8 +98,8 @@ public class Order {
                 System.out.println(tmp.getName() + " ok");
                 System.out.println("ok " + input1 + " nr. " + input2+"'s");
 
-                for (int i = 0; i < input1.length(); i++)
-                    list.add(tmp);
+                list.add(tmp);
+                quantity.add(Integer.valueOf(input2));
                 }
             }
         }
@@ -110,8 +112,12 @@ public class Order {
 
 
     @Override public String toString() {
-        return String.format("Order {pizzas=%s}", this.list);
+        String stringBOI = "";
+        for (int i=0;i<list.size();i++) {
+            String currentPizza = list.get(i).getName();
+            int currentQuantity = quantity.get(i);
+            stringBOI += "x"+currentQuantity+" "+ currentPizza +", ";
+        }
+        return stringBOI;
     }
-
-
 }

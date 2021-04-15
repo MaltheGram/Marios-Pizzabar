@@ -25,10 +25,10 @@ public class PizzaMain {
         order1.addComment();
         order1.pickUpTime();
 
-        System.out.println(order1.list);
+        System.out.println(order1.toString());
         System.out.println("Total price: " + order1.getTotalPrice() + " DKK");
 
-        Invoice.printInvoice();
+        //Invoice.printInvoice();
     }
 
 }
