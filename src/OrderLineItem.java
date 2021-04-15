@@ -13,6 +13,10 @@ public class OrderLineItem {
         return String.format("%d X %s | %s", this.amount, this.pizza.getName(), comment);
     }
 
+    public Double getPrice() {
+        return this.amount * this.pizza.getPrice();
+    }
+
     public Pizza getPizza() {
         return pizza;
     }
