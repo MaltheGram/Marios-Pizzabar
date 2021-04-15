@@ -13,8 +13,8 @@ public class OrderList {
         Pizza myPizza = menu.getPizza(5);
         Pizza myOtherPizza = menu.getPizza(11);
 
-        myOrder.addPizza(myPizza, 1);
-        myOrder.addPizza(myOtherPizza, 2);
+        myOrder.addPizza(myPizza);
+        myOrder.addPizza(myOtherPizza);
 
         System.out.println("orderList = " + orderList);
     }

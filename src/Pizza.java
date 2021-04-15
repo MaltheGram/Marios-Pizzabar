@@ -4,7 +4,7 @@ public class Pizza {
 	private final String name;
 	private final String description;
 	private final Double price;
-	
+
 	public Pizza(Integer id, String name, String description, Double price) {
 		this.id = id;
 		this.name = name;
@@ -33,4 +33,7 @@ public class Pizza {
 	public Double getPrice() {
 		return price;
 	}
+
+
+
 }

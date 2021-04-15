@@ -1,4 +1,6 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Order {
@@ -27,9 +29,15 @@ public class Order {
         // Keep adding ingredients or getting extra until Quit or quit is typed.
         while (!exit) {
             comment = sc.nextLine();
-            if (comment.contains("add") || comment.contains("Add") || comment.contains("extra") || comment.contains("Extra")) {
+           // if (!comment.startsWith("add") || comment.startsWith("Add") || comment.startsWith("extra") || comment.startsWith("Extra")) {
+                // System.out.println("Wrong input. Please use \"add\" or \"extra\"");
+                if (comment.startsWith("add") || comment.startsWith("Add") || comment.startsWith("extra") || comment.startsWith("Extra")) {
                 listOfExtras.add(comment);
                 totalPrice += 10;
+                // if customer wants to remove any ingredient, add the comment to the list, but the price stays the same
+                // if price must change: totalPrice -= x
+            } else if (comment.startsWith("no") || comment.startsWith("No")) {
+                listOfExtras.add(comment);
             } else if (comment.equals("Quit") || comment.equals("quit")) {
                 // If the ArrayList is empty, don't print an empty list.
                 exit = true;
@@ -65,11 +73,28 @@ public class Order {
         return totalPrice;
     }
 
-    public void addPizza(Pizza pizza, int quantity) {
-        for (int i = 0; i < quantity; i++) {
-            list.add(pizza);
+    public void addPizza() throws FileNotFoundException {
+        Menu menu = new Menu();
+        Map<Integer, Pizza> pizzaMenu = menu.getPizzaMenu();
+
+        boolean exit = false;
+
+        while(!exit) {
+            System.out.println("What pizza");
+            int pizzaId = sc.nextInt();
+            Pizza tmp = pizzaMenu.get(pizzaId);
+            System.out.println(tmp.getName() + " ok");
+
+            System.out.println("How many pizzas");
+            int amount = sc.nextInt();
+
+            System.out.println(amount + " ok");
+
+            list.add(tmp);
+            exit = true;
         }
     }
+
     // Getter for the list of pizzas
     public ArrayList<Pizza> getList(){
         return list;

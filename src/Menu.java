@@ -64,4 +64,8 @@ public class Menu {
 	private static Integer parseInteger(String str) {
 		return Integer.parseInt(str.strip());
 	}
+
+	public Map<Integer,Pizza>getPizzaMenu(){
+		return this.pizzas;
+	}
 }
