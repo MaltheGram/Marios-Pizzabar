@@ -12,11 +12,11 @@ public class Order {
     // Total price
 
     String comment;
-    double totalPrice;
-    int pickUpTime;
+    static double totalPrice;
+    static int pickUpTime;
     Scanner sc = new Scanner(System.in);
     ArrayList<String> listOfExtras = new ArrayList<>();
-    ArrayList<Pizza> list = new ArrayList<>();
+    static ArrayList<Pizza> list = new ArrayList<>();
 
     // Constructor for Order object
     public Order() {

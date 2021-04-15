@@ -11,10 +11,25 @@ public class UI {
     static final int hPadLength = 2;
 
     //BOX BODY SETTINGS
-    static final int maxEntryLength = 80; // scale entry list to # characters
+    static final int maxMenuEntryLength = 80; // scale entry list to # characters
+    static final int maxOrderListEntryLength = 80; // scale entry list to # characters
 
-    public static void main(String[] args) throws FileNotFoundException {
-        //nothing happens in the UI main :)
+    //PAGEHEADER SETTINGS
+    static final String pageHeader = """
+            ███╗   ███╗ █████╗ ██████╗ ██╗ ██████╗ ███████╗    ██████╗ ██╗███████╗███████╗ █████╗
+            ████╗ ████║██╔══██╗██╔══██╗██║██╔═══██╗██╔════╝    ██╔══██╗██║╚══███╔╝╚══███╔╝██╔══██╗
+            ██╔████╔██║███████║██████╔╝██║██║   ██║███████╗    ██████╔╝██║  ███╔╝   ███╔╝ ███████║
+            ██║╚██╔╝██║██╔══██║██╔══██╗██║██║   ██║╚════██║    ██╔═══╝ ██║ ███╔╝   ███╔╝  ██╔══██║
+            ██║ ╚═╝ ██║██║  ██║██║  ██║██║╚██████╔╝███████║    ██║     ██║███████╗███████╗██║  ██║
+            ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝    ╚═╝     ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝
+            """; // scale entry list to # characters
+    static final String edgeHeader = ".";
+    static final String hFillHeader = ".";
+    static final String vFillHeader = ".";
+    static final String hPaddingHeader = ".";
+
+    public static void main(String[] args) throws FileNotFoundException{
+        drawHeader();
         drawMenu();
     }
 
@@ -44,7 +59,11 @@ public class UI {
         return frame;
     }
 
-    private static void addBorder(String description,String header) {
+    private static String centerString(String header,int len,String filler) {
+        return fill(filler,len/2 - header.length()/2) + header;
+    }
+
+    private static void addBorder(String description,String header,String hPadding) {
         //split String in String[]
         String[] pizzaList = description.split("\n");
         int maxBorderWidth = getMaxLengthStringList(pizzaList);
@@ -52,16 +71,33 @@ public class UI {
         //draw top border with header
         String line = edge + fill(hFill, maxBorderWidth + hPadLength) + edge;
         System.out.println(line);
-        System.out.printf(vFill + hPadding + "%s" + hPadding + vFill + "%n", padString(header, maxBorderWidth, hPadding));
+        String headerCentered = centerString(header,maxBorderWidth,hPadding);
+        System.out.printf(vFill + hPadding + "%s" + hPadding + vFill + "\n", padString(headerCentered, maxBorderWidth, hPadding));
         System.out.println(line);
 
         //draw box description
         for (String str : pizzaList) {
-            System.out.printf(vFill + hPadding + "%s" + hPadding + vFill + "%n", padString(str, maxBorderWidth, hPadding));
+            System.out.printf(vFill + hPadding + "%s" + hPadding + vFill + "\n", padString(str, maxBorderWidth, hPadding));
         }
 
         //draw lower border
         System.out.println(line);
+    }
+
+    public static void drawHeader() {
+        //draw top border with header
+        String[] headerList = pageHeader.split("\n");
+        int headerLength = maxMenuEntryLength + maxOrderListEntryLength;
+        //String line = edgeHeader + fill(hFillHeader, headerLength) + edgeHeader;
+
+        //System.out.println(line);
+
+        for (String str : headerList) {
+            String headerCentered = centerString(str,headerLength,hPaddingHeader);
+            System.out.printf(vFillHeader + "%s" + vFillHeader + "\n", padString(headerCentered, headerLength, hPaddingHeader));
+        }
+
+        //System.out.println(line);
     }
 
     public static void drawMenu() throws FileNotFoundException {
@@ -70,14 +106,15 @@ public class UI {
 
         //Create massive pizza menu string
         for (int i=1 ; i < pizzas.getAllPizzas().size() + 1; i++) {
+
             String currentPizzaEntry = pizzas.getPizza(i).getId() +". " + pizzas.getPizza(i).getName() + " : "+pizzas.getPizza(i).getDescription();
 
-            pizzaEntries += padString(currentPizzaEntry,maxEntryLength,".");
+            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength,".");
 
-            pizzaEntries += pizzas.getPizza(i).getPrice() + ",-\n";
+            pizzaEntries += Math.round(pizzas.getPizza(i).getPrice()) + ",-\n";
         }
 
         //add border
-        addBorder(pizzaEntries,"Menu");
+        addBorder(pizzaEntries,"Menu",hPadding);
     }
 }
