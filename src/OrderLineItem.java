@@ -9,6 +9,10 @@ public class OrderLineItem {
         this.comment = comment;
     }
 
+    @Override public String toString() {
+        return String.format("%d X %s | %s", this.amount, this.pizza.getName(), comment);
+    }
+
     public Pizza getPizza() {
         return pizza;
     }
