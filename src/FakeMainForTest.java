@@ -20,23 +20,29 @@ public class FakeMainForTest {
     }
 
     public static void main(String[] args) {
+        ArrayList<OrderLineItem> lineItemList = new ArrayList<>(); // used by all objects, just clear every time
 
         Order fakeOrder1 = makeFakeOrder(210.00, 1930, "Salami");
-        ArrayList<OrderLineItem> lineItemList = new ArrayList<>();
         lineItemList.add(makeFakeLine(makeFakePizza(1), 5, "first comment"));
-        // can add more lines
+        lineItemList.add(makeFakeLine(makeFakePizza(2), 1, "second comment"));
         fakeOrder1.setListOfOrderLineItems(lineItemList);
 
-/*       Order fakeOrder2 = makeFakeOrder(300.00, 2245, "cheese");
-        fakeOrder2.addPizzaLineItemToList(1, "comment2");
+       lineItemList = new ArrayList<>();
+       Order fakeOrder2 = makeFakeOrder(300.00, 2245, "cheese");
+       lineItemList.add(makeFakeLine(makeFakePizza(3), 2, "third comment"));
+       lineItemList.add(makeFakeLine(makeFakePizza(5),1, "fourth comment"));
+       lineItemList.add(makeFakeLine(makeFakePizza(9),10, "fifth comment"));
+       fakeOrder2.setListOfOrderLineItems(lineItemList);
 
         Order fakeOrder3 = makeFakeOrder(780.00, 0400, "tomato");
-        fakeOrder3.addPizzaLineItemToList( 2, "comment3");*/
+        //fakeOrder3.addPizzaLineItemToList( 2, "comment3");
 
         OrderList orders = new OrderList();
         orders.addOrder(fakeOrder1);
- //       orders.addOrder(fakeOrder2);
+        orders.addOrder(fakeOrder2);
  //       orders.addOrder(fakeOrder3);
+
+        System.out.println(orders.getOrderList());;
     }
 
     private static Pizza makeFakePizza(Integer id) {
@@ -51,7 +57,6 @@ public class FakeMainForTest {
         Order order = new Order();
         order.setTotalPrice(totalPrice);
         order.setPickUpTime(pickUpTime);
-        order.setComment("comment!");
         ArrayList<String> extras = new ArrayList<>();
         extras.add(ingredient);
         order.setListOfExtras(extras);

@@ -1,4 +1,6 @@
-public class OrderLineItem {
+import java.io.Serializable;
+
+public class OrderLineItem implements Serializable {
     private final Pizza pizza;
     private final Integer amount;
     private final String comment;
