@@ -16,9 +16,6 @@ public class FakeMainForTest {
 
     static Map<Integer, Pizza> menu = m.getPizzaMenu();
 
-    public FakeMainForTest()  {
-    }
-
     public static void main(String[] args) {
         ArrayList<OrderLineItem> lineItemList = new ArrayList<>(); // used by all objects, just clear every time
 

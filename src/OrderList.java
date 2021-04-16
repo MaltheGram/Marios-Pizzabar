@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -9,14 +8,31 @@ import java.util.Calendar;
 import java.util.List;
 
 public class OrderList { // must only be instantiated once, at the start of the program! won't work otherwise
-    private String objectCreationTime = getCurrentSimpleDate();
-    private String fileName = "log_of_daily_orders" + "_" + objectCreationTime + ".txt";
-    private final String filePath = "E:\\IntelliJ Projects\\KEA Software Development\\Group-Project---Mario-s-Pizza\\resources\\" + fileName;
+    private final String objectCreationDate = getCurrentSimpleDate();
+    private final String fileName = "log_of_daily_orders" + "_" + objectCreationDate + ".txt";
+    private final String filePath = "Group-Project---Mario-s-Pizza\\resources\\" + fileName;
+
     private List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order o) {
+        ensureThatFileExists();
+
         orders.add(o);
+
         writeOrderToFile(o);
+    }
+
+    private void ensureThatFileExists() {
+        try {
+            File dailyLog = new File(filePath);
+            if (dailyLog.createNewFile()) {
+                System.out.println("created log file for day: " + objectCreationDate);
+            } else {
+                System.out.println("file exists for day: " + objectCreationDate);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeOrderToFile(Order o) {
