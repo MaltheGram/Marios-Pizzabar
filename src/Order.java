@@ -2,8 +2,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+import java.io.Serializable;
 
-public class Order {
+public class Order implements Serializable {
 
     // Features off src.Order class
     // Add new pizza(s)

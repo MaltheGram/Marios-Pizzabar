@@ -1,52 +1,45 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public class OrderList {
+    private final String filePath = "E:\\IntelliJ Projects\\KEA Software Development\\Group-Project---Mario-s-Pizza\\resources\\log_of_daily_orders";
+    private List<Order> orders = new ArrayList<>();
 
-    public static void main(String[] args) throws FileNotFoundException {
-        OrderList orderList = new OrderList();
-        Menu menu = new Menu();
 
-        Order myOrder = orderList.createNewOrder();
-        Pizza myPizza = menu.getPizza(5);
-        Pizza myOtherPizza = menu.getPizza(11);
-
-        //myOrder.addPizza(myPizza);
-        //myOrder.addPizza(myOtherPizza);
-
-        System.out.println("orderList = " + orderList);
+    OrderList() {
+        this.orders = orders;
     }
 
-    private Collection<Order> orders = new ArrayList<>();
-
-    public OrderList() {
-
-    }
-    
-    public Order createNewOrder() {
-        Order order = new Order();
-        this.orders.add(order);
-
-        return order;
+    public List<Order> getOrderList() {
+        return orders;
     }
 
-    public void saveOrderListToDisk(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
-        BufferedWriter bw = new BufferedWriter(fw);
+    public void addOrder(Order o) {
+        orders.add(o);
+        OrderList ol = new OrderList();
+        ol.writeOrderToFile(o);
+    }
 
-        for (Order order : this.orders) {
-            bw.write( order.toString() );
-            bw.newLine();
+    private void writeOrderToFile(Order o) {
+        // if file exists
+        // add pizza object to file
+        try {
+            FileOutputStream fileOut = new FileOutputStream((filePath));
+            ObjectOutputStream objectOut = new ObjectOutputStream((fileOut));
+            objectOut.writeObject((o));
+            objectOut.close();
+            System.out.println("pizza successfully added to file");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        bw.close();
-        fw.close();
     }
 
-    @Override
-    public String toString() {
-        return this.orders.toString();
+    public void removeOrder(Order o) {
+        orders.remove(o);
+        removeOrderFromFile(o);
+    }
+
+    private void removeOrderFromFile(Order o) {
     }
 }
