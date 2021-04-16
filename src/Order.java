@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.Serializable;
@@ -133,6 +134,16 @@ public class Order implements Serializable {
     //public ArrayList<Pizza> getList(){
     //    return listOfOrderLineItems;
     //}
+
+    public List<Pizza> getPizzas() {
+        List<Pizza> pizzas = new ArrayList<>();
+        for (OrderLineItem lineItem : this.listOfOrderLineItems) {
+            for (int i = lineItem.getAmount(); i>0; i-- ) {
+                pizzas.add(lineItem.getPizza());
+            }
+        }
+        return pizzas;
+    }
 
 
     @Override public String toString() {
