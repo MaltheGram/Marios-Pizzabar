@@ -28,12 +28,10 @@ public class PizzaMain {
         Order order2 = new Order();
 
         order1.addPizza();
-        order1.addComment();
         order1.pickUpTime();
         Invoice.printInvoice(order1);
 
         order2.addPizza();
-        order2.addComment();
         order2.pickUpTime();
         Invoice.printInvoice(order2);
 

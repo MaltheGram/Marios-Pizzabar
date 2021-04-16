@@ -12,13 +12,13 @@ public class Order implements Serializable {
     // Add comment to order
     // Pickup time of the order
     // Total price
-    private final boolean isOrderPickedUp = false;
-    private String comment;
+//    private boolean isOrderPickedUp = false;
+//    private String comment;
 
     // Setter
-    public void setComment(String comment) {
+/*    public void setComment(String comment) {
         this.comment = comment;
-    }
+    }*/
     // Setter
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
@@ -32,24 +32,19 @@ public class Order implements Serializable {
         this.listOfOrderLineItems = listOfOrderLineItems;
     }
 
-    public void setListOfExtras(ArrayList<String> listOfExtras) {
+/*    public void setListOfExtras(ArrayList<String> listOfExtras) {
         this.listOfExtras = listOfExtras;
-    }
+    }*/
 
     private double totalPrice;
     private int pickUpTime;
     private final Scanner sc = new Scanner(System.in);
     private ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
-    private ArrayList<String> listOfExtras = new ArrayList<>();
+//    private ArrayList<String> listOfExtras = new ArrayList<>();
     //private final ArrayList<Pizza> list = new ArrayList<>();
     //private final ArrayList<Integer> quantity = new ArrayList<>() ;
 
-    // Constructor for Order object
-    public Order() {
-
-    }
-
-    public void addComment() {
+/*    public void addComment() {
         boolean exit = false;
         System.out.println("Add comment or \"Quit\" to exit");
         // Keep adding ingredients or getting extra until Quit or quit is typed.
@@ -78,7 +73,7 @@ public class Order implements Serializable {
     // Getter for the comment list of extras
     public ArrayList<String> getCommentList(){
         return listOfExtras;
-    }
+    }*/
 
     public void pickUpTime() {
         System.out.println("Please add pickup time");
@@ -115,6 +110,7 @@ public class Order implements Serializable {
         while (!exit) {
             String input1;
             String input2;
+            String input3;
 
             System.out.println("What pizza");
             input1 = sc.nextLine();
@@ -122,15 +118,18 @@ public class Order implements Serializable {
             System.out.println("How many pizzas");
             input2 = sc.nextLine();
 
+            System.out.println("Comments");
+            input3 = sc.nextLine();
+
             if (input1.equalsIgnoreCase("quit") || input1.isBlank()) {
                 exit = true;
             } else {
                 Pizza pizza = pizzaMenu.get(Integer.parseInt(input1));
                 Integer quantity = Integer.parseInt(input2);
 
-                OrderLineItem orderLine = new OrderLineItem(pizza,quantity,"");
+                OrderLineItem orderLine = new OrderLineItem(pizza,quantity, input3);
 
-                listOfOrderLineItems.add(orderLine);;
+                listOfOrderLineItems.add(orderLine);
 
                 //System.out.println(tmp.getName() + " ok");
                 //System.out.println("ok " + input1 + " nr. " + input2+"'s");
@@ -165,12 +164,12 @@ public class Order implements Serializable {
         for (OrderLineItem i : listOfOrderLineItems) {
             stringBOI += i.toString();
         }
-        stringBOI += "\n";
+/*        stringBOI += "\n";
 
         for (String i : listOfExtras) {
             stringBOI += i + ", ";
-        }
-            stringBOI += "\n" + getTotalPrice() + " DKK";
-        return stringBOI;
+        }*/
+            stringBOI += getTotalPrice() + " DKK";
+        return stringBOI + "\n";
     }
 }
