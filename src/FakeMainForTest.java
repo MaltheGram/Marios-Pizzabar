@@ -34,28 +34,18 @@ public class FakeMainForTest {
        lineItemList.add(makeFakeLine(makeFakePizza(9),10, "fifth comment"));
        fakeOrder2.setListOfOrderLineItems(lineItemList);
 
+        lineItemList = new ArrayList<>();
         Order fakeOrder3 = makeFakeOrder(780.00, 0400);
         lineItemList.add(makeFakeLine(makeFakePizza(11), 3, "sixth comment"));
+        fakeOrder3.setListOfOrderLineItems(lineItemList);
 
 
         OrderList orders = new OrderList();
         orders.addOrder(fakeOrder1);
         orders.addOrder(fakeOrder2);
+        orders.addOrder(fakeOrder3);
 
-        printFakeOrderList(orders);
-    }
-
-    private static void printFakeOrderList(OrderList orders) {
-        var temp = new ArrayList<>();
-        for(int i = 0; i < orders.getOrderList().size(); i++) {
-            System.out.println(orders.getOrderList().get(i));
-
-
-        }
-
-
-
-        System.out.println(temp); // currently prints in brackets
+        orders.printOrderList();
     }
 
     private static Pizza makeFakePizza(Integer id) {

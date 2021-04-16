@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OrderList { // must only be instantiated once, at the start of the program! won't work otherwise
     private String objectCreationTime = getCurrentSimpleDate();
-    private String fileName = "log_of_daily_orders" + "_" + objectCreationTime;
+    private String fileName = "log_of_daily_orders" + "_" + objectCreationTime + ".txt";
     private final String filePath = "E:\\IntelliJ Projects\\KEA Software Development\\Group-Project---Mario-s-Pizza\\resources\\" + fileName;
     private List<Order> orders = new ArrayList<>();
 
@@ -23,9 +23,6 @@ public class OrderList { // must only be instantiated once, at the start of the 
         try {
             var stringToAppend = "";
 
-            // while there are more orderLines, add lines to string
-            // add order total amount
-
             for(OrderLineItem lineItem : o.getListOfOrderLineItems()) {
                 stringToAppend += lineItem.toString();
             }
@@ -33,7 +30,7 @@ public class OrderList { // must only be instantiated once, at the start of the 
 
             Files.write(Paths.get(fileName), stringToAppend.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
 
 
@@ -55,5 +52,12 @@ public class OrderList { // must only be instantiated once, at the start of the 
 
     public List<Order> getOrderList() {
         return orders;
+    }
+
+    public void printOrderList() {
+
+        for(int i = 0; i < getOrderList().size(); i++) {
+            System.out.println(getOrderList().get(i));
+        }
     }
 }

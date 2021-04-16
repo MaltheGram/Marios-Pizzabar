@@ -170,6 +170,6 @@ public class Order implements Serializable {
             stringBOI += i + ", ";
         }*/
             stringBOI += getTotalPrice() + " DKK";
-        return stringBOI + "\n";
+        return stringBOI;
     }
 }
