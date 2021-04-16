@@ -36,14 +36,16 @@ public class FakeMainForTest {
         orders.addOrder(fakeOrder3);
     }
 
-    private static void addPizzaToOrder(Order fakeOrder) {
+   private static void addPizzaToOrder(Order fakeOrder) {
         List<Pizza> pizzas = fakeOrder.getList();
         pizzas.add(menu.get(1));
         pizzas.add(menu.get(5));
         pizzas.add(menu.get(14));
     }
 
-    private static Order makeFakeOrder(double totalPrice, int pickUpTime, String ingredient) {
+
+
+   private static Order makeFakeOrder(double totalPrice, int pickUpTime, String ingredient) {
         Order order = new Order();
         order.totalPrice = totalPrice;
         order.pickUpTime = pickUpTime;
@@ -53,4 +55,7 @@ public class FakeMainForTest {
 
         return order;
     }
+
 }
+
+

@@ -24,8 +24,8 @@ public class PizzaMain {
 
         // Add loop to keep adding pizzas
 
-        Order order1 = newList.createNewOrder();
-        Order order2 = newList.createNewOrder();
+        Order order1 = new Order();
+        Order order2 = new Order();
 
         order1.addPizza();
         order1.addComment();
@@ -37,10 +37,14 @@ public class PizzaMain {
         order2.pickUpTime();
         Invoice.printInvoice(order2);
 
+        OrderList orderList = new OrderList();
+        orderList.addOrder(order1);
+        orderList.addOrder(order2);
 
-        newList.saveOrderListToDisk("/Users/malthegram/desktop/fil.txt");
+        System.out.println(orderList);
 
 
+        
     }
 
 }

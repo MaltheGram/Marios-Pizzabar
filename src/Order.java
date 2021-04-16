@@ -13,6 +13,20 @@ public class Order implements Serializable {
     // Total price
     private final boolean isOrderPickedUp = false;
     private String comment;
+
+    // Setter
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    // Setter
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    // Setter
+    public void setPickUpTime(int pickUpTime) {
+        this.pickUpTime = pickUpTime;
+    }
+
     private double totalPrice;
     private int pickUpTime;
     private final Scanner sc = new Scanner(System.in);
@@ -95,15 +109,15 @@ public class Order implements Serializable {
             System.out.println("How many pizzas");
             input2 = sc.nextLine();
 
-            if (input1.equals("Quit") || input2.equals("Quit")) {
-                    exit = true;
+            if (input1.equalsIgnoreCase("quit") || input1.isBlank()) {
+                exit = true;
             } else {
                 Pizza pizza = pizzaMenu.get(Integer.parseInt(input1));
                 Integer quantity = Integer.parseInt(input2);
 
                 OrderLineItem orderLine = new OrderLineItem(pizza,quantity,"");
 
-                listOfOrderLineItems.add(orderLine);
+                listOfOrderLineItems.add(orderLine);;
 
                 //System.out.println(tmp.getName() + " ok");
                 //System.out.println("ok " + input1 + " nr. " + input2+"'s");
@@ -111,6 +125,7 @@ public class Order implements Serializable {
                 //orderLine.add(tmp);
                 //quantity.add(Integer.valueOf(input2));
                 }
+
             }
         }
 

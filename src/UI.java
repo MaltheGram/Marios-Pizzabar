@@ -35,7 +35,7 @@ public class UI {
         drawHeader();
         drawMenu();
 
-        clearConsole();
+        clear();
 
         drawHeader();
         drawMenu();
