@@ -6,7 +6,6 @@ public class OrderList {
     private final String filePath = "E:\\IntelliJ Projects\\KEA Software Development\\Group-Project---Mario-s-Pizza\\resources\\log_of_daily_orders";
     private List<Order> orders = new ArrayList<>();
 
-
     OrderList() {
         this.orders = orders;
     }
@@ -17,8 +16,7 @@ public class OrderList {
 
     public void addOrder(Order o) {
         orders.add(o);
-        OrderList ol = new OrderList();
-        ol.writeOrderToFile(o);
+        writeOrderToFile(o);
     }
 
     private void writeOrderToFile(Order o) {
