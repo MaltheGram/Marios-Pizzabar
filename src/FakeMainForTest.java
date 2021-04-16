@@ -16,34 +16,35 @@ public class FakeMainForTest {
 
     static Map<Integer, Pizza> menu = m.getPizzaMenu();
 
-    public FakeMainForTest() throws FileNotFoundException {
+    public FakeMainForTest()  {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 
         Order fakeOrder1 = makeFakeOrder(210.00, 1930, "Salami");
-        addPizzaToOrder(fakeOrder1);
+        ArrayList<OrderLineItem> lineItemList = new ArrayList<>();
+        lineItemList.add(makeFakeLine(makeFakePizza(1), 5, "first comment"));
+        fakeOrder1.setListOfOrderLineItems(lineItemList);
 
-        Order fakeOrder2 = makeFakeOrder(300.00, 2245, "cheese");
-        addPizzaToOrder(fakeOrder2);
+/*       Order fakeOrder2 = makeFakeOrder(300.00, 2245, "cheese");
+        fakeOrder2.addPizzaLineItemToList(1, "comment2");
 
         Order fakeOrder3 = makeFakeOrder(780.00, 0400, "tomato");
-        addPizzaToOrder(fakeOrder3);
+        fakeOrder3.addPizzaLineItemToList( 2, "comment3");*/
 
         OrderList orders = new OrderList();
         orders.addOrder(fakeOrder1);
-        orders.addOrder(fakeOrder2);
-        orders.addOrder(fakeOrder3);
+ //       orders.addOrder(fakeOrder2);
+ //       orders.addOrder(fakeOrder3);
     }
 
-   private static void addPizzaToOrder(Order fakeOrder) {
-        List<Pizza> pizzas = fakeOrder.getList();
-        //use pizzaLineObjects instead?
-        pizzas.add(menu.get(1));
-        pizzas.add(menu.get(5));
-        pizzas.add(menu.get(14));
+    private static Pizza makeFakePizza(Integer id) {
+        return menu.get(id);
     }
 
+    private static OrderLineItem makeFakeLine(Pizza pizza, Integer amount, String comment) {
+        return new OrderLineItem(pizza, amount, comment);
+    }
 
    private static Order makeFakeOrder(double totalPrice, int pickUpTime, String ingredient) {
         Order order = new Order();
