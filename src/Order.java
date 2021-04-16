@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.Serializable;
@@ -27,12 +28,19 @@ public class Order implements Serializable {
         this.pickUpTime = pickUpTime;
     }
 
+    public void setListOfOrderLineItems(ArrayList<OrderLineItem> listOfOrderLineItems) {
+        this.listOfOrderLineItems = listOfOrderLineItems;
+    }
+
+    public void setListOfExtras(ArrayList<String> listOfExtras) {
+        this.listOfExtras = listOfExtras;
+    }
+
     private double totalPrice;
     private int pickUpTime;
     private final Scanner sc = new Scanner(System.in);
-
-    private final ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
-    private final ArrayList<String> listOfExtras = new ArrayList<>();
+    private ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
+    private ArrayList<String> listOfExtras = new ArrayList<>();
     //private final ArrayList<Pizza> list = new ArrayList<>();
     //private final ArrayList<Integer> quantity = new ArrayList<>() ;
 
@@ -93,6 +101,11 @@ public class Order implements Serializable {
         return totalPrice;
     }
 
+    // Getter for getListOfOrderLineItems
+    public ArrayList<OrderLineItem> getListOfOrderLineItems() {
+        return listOfOrderLineItems;
+    }
+
     public void addPizza() throws FileNotFoundException {
         Menu menu = new Menu();
         Map<Integer, Pizza> pizzaMenu = menu.getPizzaMenu();
@@ -129,24 +142,33 @@ public class Order implements Serializable {
             }
         }
 
+
+
     // Getter for the list of pizzas
     //public ArrayList<Pizza> getList(){
     //    return listOfOrderLineItems;
     //}
 
+    public List<Pizza> getPizzas() {
+        List<Pizza> pizzas = new ArrayList<>();
+        for (OrderLineItem lineItem : this.listOfOrderLineItems) {
+            for (int i = lineItem.getAmount(); i>0; i-- ) {
+                pizzas.add(lineItem.getPizza());
+            }
+        }
+        return pizzas;
+    }
+
 
     @Override public String toString() {
         String stringBOI = "";
-        for (int i=0;i<listOfOrderLineItems.size();i++) {
-            String currentPizza = listOfOrderLineItems.get(i).getPizza().getName();
-            int currentQuantity = listOfOrderLineItems.get(i).getAmount();
-            stringBOI += "x" +currentQuantity + " " + currentPizza + ", ";
+        for (OrderLineItem i : listOfOrderLineItems) {
+            stringBOI += i.toString();
         }
         stringBOI += "\n";
 
-        for (int i=0;i<listOfExtras.size();i++) {
-            String currentExtra = listOfExtras.get(i);
-            stringBOI += currentExtra + ", ";
+        for (String i : listOfExtras) {
+            stringBOI += i + ", ";
         }
             stringBOI += "\n" + getTotalPrice() + " DKK";
         return stringBOI;
