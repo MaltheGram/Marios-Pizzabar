@@ -10,7 +10,7 @@ public class OrderLineItem {
     }
 
     @Override public String toString() {
-        return String.format("%d X %s | %s", this.amount, this.pizza.getName(), comment);
+        return String.format("x%d X %s, ", this.amount, this.pizza.getName());
     }
 
     public Double getPrice() {

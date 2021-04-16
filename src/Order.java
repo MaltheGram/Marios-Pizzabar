@@ -137,16 +137,13 @@ public class Order implements Serializable {
 
     @Override public String toString() {
         String stringBOI = "";
-        for (int i=0;i<listOfOrderLineItems.size();i++) {
-            String currentPizza = listOfOrderLineItems.get(i).getPizza().getName();
-            int currentQuantity = listOfOrderLineItems.get(i).getAmount();
-            stringBOI += "x" +currentQuantity + " " + currentPizza + ", ";
+        for (OrderLineItem i : listOfOrderLineItems) {
+            stringBOI += i.toString();
         }
         stringBOI += "\n";
 
-        for (int i=0;i<listOfExtras.size();i++) {
-            String currentExtra = listOfExtras.get(i);
-            stringBOI += currentExtra + ", ";
+        for (String i : listOfExtras) {
+            stringBOI += i + ", ";
         }
             stringBOI += "\n" + getTotalPrice() + " DKK";
         return stringBOI;
