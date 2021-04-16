@@ -27,12 +27,19 @@ public class Order implements Serializable {
         this.pickUpTime = pickUpTime;
     }
 
+    public void setListOfOrderLineItems(ArrayList<OrderLineItem> listOfOrderLineItems) {
+        this.listOfOrderLineItems = listOfOrderLineItems;
+    }
+
+    public void setListOfExtras(ArrayList<String> listOfExtras) {
+        this.listOfExtras = listOfExtras;
+    }
+
     private double totalPrice;
     private int pickUpTime;
     private final Scanner sc = new Scanner(System.in);
-
-    private final ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
-    private final ArrayList<String> listOfExtras = new ArrayList<>();
+    private ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
+    private ArrayList<String> listOfExtras = new ArrayList<>();
     //private final ArrayList<Pizza> list = new ArrayList<>();
     //private final ArrayList<Integer> quantity = new ArrayList<>() ;
 
@@ -93,6 +100,11 @@ public class Order implements Serializable {
         return totalPrice;
     }
 
+    // Getter for getListOfOrderLineItems
+    public ArrayList<OrderLineItem> getListOfOrderLineItems() {
+        return listOfOrderLineItems;
+    }
+
     public void addPizza() throws FileNotFoundException {
         Menu menu = new Menu();
         Map<Integer, Pizza> pizzaMenu = menu.getPizzaMenu();
@@ -128,6 +140,8 @@ public class Order implements Serializable {
 
             }
         }
+
+
 
     // Getter for the list of pizzas
     //public ArrayList<Pizza> getList(){
