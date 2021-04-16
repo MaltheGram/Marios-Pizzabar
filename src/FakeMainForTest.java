@@ -19,11 +19,12 @@ public class FakeMainForTest {
     public FakeMainForTest()  {
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
         Order fakeOrder1 = makeFakeOrder(210.00, 1930, "Salami");
         ArrayList<OrderLineItem> lineItemList = new ArrayList<>();
         lineItemList.add(makeFakeLine(makeFakePizza(1), 5, "first comment"));
+        // can add more lines
         fakeOrder1.setListOfOrderLineItems(lineItemList);
 
 /*       Order fakeOrder2 = makeFakeOrder(300.00, 2245, "cheese");
