@@ -15,11 +15,11 @@ public class OrderList { // must only be instantiated once, at the start of the 
     private List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order o) {
-        ensureThatFileExists();
+        //ensureThatFileExists();
 
         orders.add(o);
 
-        writeOrderToFile(o);
+        //writeOrderToFile(o);
     }
 
     private void ensureThatFileExists() {
