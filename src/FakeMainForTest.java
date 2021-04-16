@@ -38,20 +38,21 @@ public class FakeMainForTest {
 
    private static void addPizzaToOrder(Order fakeOrder) {
         List<Pizza> pizzas = fakeOrder.getList();
+        //use pizzaLineObjects instead?
         pizzas.add(menu.get(1));
         pizzas.add(menu.get(5));
         pizzas.add(menu.get(14));
     }
 
 
-
    private static Order makeFakeOrder(double totalPrice, int pickUpTime, String ingredient) {
         Order order = new Order();
-        order.setTotalPrice = totalPrice;
-        order.setPickUpTime = pickUpTime;
+        order.setTotalPrice(totalPrice);
+        order.setPickUpTime(pickUpTime);
+        order.setComment("comment!");
         ArrayList<String> extras = new ArrayList<>();
         extras.add(ingredient);
-        order.setListOfExtras = extras;
+        order.setListOfExtras(extras);
 
         return order;
     }
