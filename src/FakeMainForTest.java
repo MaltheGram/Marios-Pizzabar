@@ -47,11 +47,11 @@ public class FakeMainForTest {
 
    private static Order makeFakeOrder(double totalPrice, int pickUpTime, String ingredient) {
         Order order = new Order();
-        order.totalPrice = totalPrice;
-        order.pickUpTime = pickUpTime;
+        order.setTotalPrice = totalPrice;
+        order.setPickUpTime = pickUpTime;
         ArrayList<String> extras = new ArrayList<>();
         extras.add(ingredient);
-        order.listOfExtras = extras;
+        order.setListOfExtras = extras;
 
         return order;
     }
