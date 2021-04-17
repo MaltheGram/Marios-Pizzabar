@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ public class FakeMainForTest {
     static Map<Integer, Pizza> menu = m.getPizzaMenu();
 
     public static void main(String[] args) {
+        System.out.println(new File(".").getAbsolutePath());
+
         ArrayList<OrderLineItem> lineItemList = new ArrayList<>(); // used by all objects, just clear every time
 
         Order fakeOrder1 = makeFakeOrder(210.00, 1930);

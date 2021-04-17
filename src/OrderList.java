@@ -1,5 +1,6 @@
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
@@ -7,49 +8,67 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class OrderList { // must only be instantiated once, at the start of the program! won't work otherwise
-    private final String objectCreationDate = getCurrentSimpleDate();
-    private final String fileName = "log_of_daily_orders" + "_" + objectCreationDate + ".txt";
-    private final String filePath = "Group-Project---Mario-s-Pizza\\resources\\" + fileName;
+public class OrderList {
+   //Getting environment variable for user profile, this is pre/defined by Windows
+    private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
+    private final String dataDirectory = "Mario-s-Pizza-data";
+   // private final String fileName = "log_of_daily_orders" + "_" + date + ".txt";
 
-    private List<Order> orders = new ArrayList<>();
+    private static List<Order> orders = new ArrayList<>();
+
+    private File selectFile(){
+        String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
+        Path file = Paths.get(myDocuments, dataDirectory, todaysFile);
+        System.out.println(file);
+
+        return file.toFile();
+    }
+
+    public OrderList() {
+
+    }
+
 
     public void addOrder(Order o) {
-        //ensureThatFileExists();
+        File dailyLog = selectFile();
+
+        ensureThatFileExists(dailyLog);
 
         orders.add(o);
 
-        //writeOrderToFile(o);
+        writeOrderToFile(o, dailyLog);
     }
 
-    private void ensureThatFileExists() {
+    private void ensureThatFileExists(File dailyLog) {
         try {
-            File dailyLog = new File(filePath);
-            if (dailyLog.createNewFile()) {
-                System.out.println("created log file for day: " + objectCreationDate);
+            if(!dailyLog.exists()) {
+                dailyLog.getParentFile().mkdirs();
+                dailyLog.createNewFile();
+                System.out.println("created log file for day: " + dailyLog.getName());
+
+
+
             } else {
-                System.out.println("file exists for day: " + objectCreationDate);
+                System.out.println("file exists for day: " + dailyLog.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void writeOrderToFile(Order o) {
+    private void writeOrderToFile(Order o, File dailyLog) {
         try {
             var stringToAppend = "";
 
             for(OrderLineItem lineItem : o.getListOfOrderLineItems()) {
-                stringToAppend += lineItem.toString();
+                stringToAppend += lineItem.toString() + "\n";
             }
-            stringToAppend += "ORDER TOTAL: " + o.getTotalPrice();
+            stringToAppend += "ORDER TOTAL: " + o.getTotalPrice() + "\n\n";
 
-            Files.write(Paths.get(fileName), stringToAppend.getBytes(), StandardOpenOption.APPEND);
+            Files.write(dailyLog.toPath(), stringToAppend.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void removeOrder(Order o) {
