@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class UI {
     //UI SETTINGS
     //BORDER SETTINGS, h = horizontal, v = vertical
-    static final String edge = "\u2548";
-    static final String hFill = "\u2501";
-    static final String vFill = "\u2502";
-    static final String hPadding = " ";
-    static final int hPadLength = 2;
+    private static final String edge = "\u2548";
+    private static final String hFill = "\u2501";
+    private static final String vFill = "\u2502";
+    private static final String hPadding = " ";
+    private static final int hPadLength = 2;
 
     //BOX BODY SETTINGS
-    static final int maxMenuEntryLength = 80; // scale entry list to # characters
-    static final int maxOrderListEntryLength = 80; // scale entry list to # characters
+    private static final int maxMenuEntryLength = 90; // scale entry list to # characters
+    private static final int maxOrderListEntryLength = 90; // scale entry list to # characters
 
     //PAGEHEADER SETTINGS
-    static final String pageHeader =
+    private static final String pageHeader =
             """
             ███╗   ███╗ █████╗ ██████╗ ██╗ ██████╗ ███████╗    ██████╗ ██╗███████╗███████╗ █████╗
             ████╗ ████║██╔══██╗██╔══██╗██║██╔═══██╗██╔════╝    ██╔══██╗██║╚══███╔╝╚══███╔╝██╔══██╗
@@ -26,19 +26,10 @@ public class UI {
             ██║ ╚═╝ ██║██║  ██║██║  ██║██║╚██████╔╝███████║    ██║     ██║███████╗███████╗██║  ██║
             ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝    ╚═╝     ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝
             """; // scale entry list to # characters
-    static final String edgeHeader = ".";
-    static final String hFillHeader = ".";
-    static final String vFillHeader = ".";
-    static final String hPaddingHeader = ".";
+    private static final String vFillHeader = ":";
+    private static final String hPaddingHeader = ".";
 
     public static void main(String[] args) throws FileNotFoundException{
-        drawHeader();
-        drawMenu();
-
-        clear();
-
-        drawHeader();
-        drawMenu();
     }
 
     //check string stream for max length of string
@@ -107,19 +98,56 @@ public class UI {
 
         //System.out.println(line);
     }
+    public static void drawOrderlist(OrderList orders) {
+        String orderEntries ="";
+        for (Order o : orders.getOrderList()) {
+            for (OrderLineItem l : o.getListOfOrderLineItems()) {
+                orderEntries += "x"+l.getAmount() + " #"+l.getPizza().getId()+ " " + l.getPizza().getName();
 
-    public static void drawMenu() throws FileNotFoundException {
-        Menu pizzas = new Menu();
+                if (l.getComment().length() > 0) {orderEntries += " (" + l.getComment() + ")";}
+
+                orderEntries += "\n";
+            }
+
+            String pricePoint = String.valueOf(numberShorten(o.getTotalPrice()));
+
+            String orderTotal = "Total: " + pricePoint + " DKK";
+
+            orderTotal = padString(orderTotal,maxOrderListEntryLength," ");
+
+            orderEntries += orderTotal + "\n";
+
+            //-1 because some dumb rounding stuff idk
+            orderEntries += padString("",maxOrderListEntryLength,hFill) + "\n";
+
+
+        }
+        //Create massive pizza menu string
+
+        //add border
+        addBorder(orderEntries,"Active Orders",hPadding);
+    }
+
+    public static String numberShorten(double d) {
+        if(d == (long) d)
+            return String.format("%d",(long) d);
+        else
+            return String.format("%s",d);
+    }
+
+    public static void drawMenu(Menu menu){
         String pizzaEntries ="";
 
         //Create massive pizza menu string
-        for (int i=1 ; i < pizzas.getAllPizzas().size() + 1; i++) {
+        for (Pizza p : menu.getAllPizzas()) {
 
-            String currentPizzaEntry = pizzas.getPizza(i).getId() +". " + pizzas.getPizza(i).getName() + " : "+pizzas.getPizza(i).getDescription();
+            String currentPizzaEntry = p.getId() +". " + p.getName() + " : "+p.getDescription();
 
-            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength,".");
+            String pizzaPrice = Math.round(p.getPrice()) + ",-\n";
+            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength - pizzaPrice.length()+1,".");
 
-            pizzaEntries += Math.round(pizzas.getPizza(i).getPrice()) + ",-\n";
+            pizzaEntries += pizzaPrice;
+
         }
 
         //add border

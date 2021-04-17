@@ -15,7 +15,7 @@ public class PizzaMain {
             System.out.println("woops");
         }
         UI.drawHeader();
-        UI.drawMenu();
+        //UI.drawMenu();
         System.out.println(menu);
 
         System.out.println(menu.getPizza(6));

@@ -17,7 +17,7 @@ public class FakeMainForTest {
 
     static Map<Integer, Pizza> menu = m.getPizzaMenu();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
         System.out.println(new File(".").getAbsolutePath());
 
         ArrayList<OrderLineItem> lineItemList = new ArrayList<>(); // used by all objects, just clear every time
@@ -39,13 +39,18 @@ public class FakeMainForTest {
         lineItemList.add(makeFakeLine(makeFakePizza(11), 3, "sixth comment"));
         fakeOrder3.setListOfOrderLineItems(lineItemList);
 
-
         OrderList orders = new OrderList();
         orders.addOrder(fakeOrder1);
         orders.addOrder(fakeOrder2);
         orders.addOrder(fakeOrder3);
 
         orders.printOrderList();
+
+        //MARK ADDED THIS SHIT vvv
+        Menu pizzas = new Menu();
+        UI.drawHeader();
+        UI.drawOrderlist(orders);
+        UI.drawMenu(pizzas);
     }
 
     private static Pizza makeFakePizza(Integer id) {
