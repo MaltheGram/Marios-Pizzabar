@@ -39,6 +39,7 @@ public class FakeMainForTest {
         lineItemList.add(makeFakeLine(makeFakePizza(11), 3, "sixth comment"));
         fakeOrder3.setListOfOrderLineItems(lineItemList);
 
+
         OrderList orders = new OrderList();
         orders.addOrder(fakeOrder1);
         orders.addOrder(fakeOrder2);
@@ -51,6 +52,11 @@ public class FakeMainForTest {
         UI.drawHeader();
         UI.drawOrderlist(orders);
         UI.drawMenu(pizzas);
+
+
+        orders.removeOrder(fakeOrder3);
+
+        orders.changeOrderStatus(fakeOrder2,true);
     }
 
     private static Pizza makeFakePizza(Integer id) {

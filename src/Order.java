@@ -1,14 +1,19 @@
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.Serializable;
 
 public class Order implements Serializable {
 
-    // Setter
+    // Temporary setters for testing (FakeMainForTest)
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
-    // Setter
+
     public void setPickUpTime(int pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
@@ -17,30 +22,51 @@ public class Order implements Serializable {
         this.listOfOrderLineItems = listOfOrderLineItems;
     }
 
+    public void setIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
+    }
+
     private double totalPrice;
-    private int pickUpTime;
+    private Long id = new OrderID().getNewOrderID();
+
+    public String getOrderTime() {
+        return orderTime;
+    }
+
+    private String orderTime = getCurrentSimpleTime();
+    private Integer pickUpTime;
     private final Scanner sc = new Scanner(System.in);
     private ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
+    private Boolean isPaid = false;
 
     public void pickUpTime() {
         System.out.println("Please add pickup time");
         pickUpTime = sc.nextInt();
-        // Make if pickUpTime > closing time = error
+        // Make if pickUpTime > closing time = error. Do we know closing time?
         System.out.println("Pickup at: " + pickUpTime);
     }
 
-    // Getter for pick up time
+    private String getCurrentSimpleTime() {
+            String timeStamp = fetchCompleteSystemTime();
+            return timeStamp.substring(9, 13); // is this the right index?
+    }
+
+    private String fetchCompleteSystemTime() {
+        return new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public int getPickUpTime(){
         return pickUpTime;
     }
 
-    // Getter for total price
     public double getTotalPrice() {
-
         for (OrderLineItem lineItem : listOfOrderLineItems) {
             totalPrice += lineItem.getPrice() + getPriceOfExtras(lineItem);
         }
-
         return totalPrice;
     }
 
@@ -55,9 +81,12 @@ public class Order implements Serializable {
         return Double.valueOf(amount);
     }
 
-    // Getter for getListOfOrderLineItems
     public ArrayList<OrderLineItem> getListOfOrderLineItems() {
         return listOfOrderLineItems;
+    }
+
+    public Boolean getIsPaid() {
+        return isPaid;
     }
 
     public void addPizza() throws FileNotFoundException {
@@ -94,8 +123,8 @@ public class Order implements Serializable {
         }
     }
 
-    private boolean isQuit(String input1) {
-        return input1.equalsIgnoreCase("quit") || input1.isBlank();
+    private boolean isQuit(String input) {
+        return input.equalsIgnoreCase("quit") || input.isBlank();
     }
 
     @Override public String toString() {

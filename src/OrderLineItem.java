@@ -12,7 +12,7 @@ public class OrderLineItem implements Serializable {
     }
 
     @Override public String toString() {
-        return String.format("x%d X %s, ", this.amount, this.pizza.getName() + " (" + comment + ")"); // add comment
+        return String.format("x%d %s, ", this.amount, this.pizza.getName() + " (" + comment + ")");
     }
 
     public Double getPrice() {
