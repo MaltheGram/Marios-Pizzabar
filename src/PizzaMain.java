@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class PizzaMain {
     private static Boolean shouldContinueRunning = true;
-    private static Boolean firstRun = true;
     private static final Scanner sc = new Scanner(System.in);
 
     private static final String UIOptions =
@@ -29,18 +28,10 @@ public class PizzaMain {
     public static void main(String[] args) {
 
         while (shouldContinueRunning) {
-            if (firstRun) {
-                firstRun = false;
-                UI.clear();
-                UI.drawHeader();
-                UI.drawMenu(menu.getAllPizzas());
-                System.out.println(UIOptions);
-            } else {
-                UI.clear();
-                UI.drawHeader();
-                UI.drawOrderlistAndMenu(orderList.getOrders(), menu.getAllPizzas());
-                System.out.println(UIOptions);
-            }
+            UI.clear();
+            UI.drawHeader();
+            UI.drawOrderlistAndMenu(orderList.getOrders(), menu.getAllPizzas());
+            System.out.println(UIOptions);
 
             String input = sc.nextLine();
 
@@ -56,7 +47,7 @@ public class PizzaMain {
             } else if ( input.equalsIgnoreCase("3")) {
                     removeOrder();
             } else if ( input.equalsIgnoreCase("4")) {
-                    //TODO: Print daily report
+                //TODO: Print daily report
             } else if ( input.equalsIgnoreCase("9")) {
                 System.out.println("Lukker...");
                 // TODO: PRINT DAILY REPORT
