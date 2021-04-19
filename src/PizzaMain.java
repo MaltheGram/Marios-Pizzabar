@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class PizzaMain {
@@ -14,30 +15,70 @@ public class PizzaMain {
         } catch (FileNotFoundException e) {
             System.out.println("woops");
         }
+
+
         UI.drawHeader();
-        //UI.drawMenu();
-        System.out.println(menu);
+        UI.drawMenu(menu);
+       // System.out.println(menu);
 
-        System.out.println(menu.getPizza(6));
+       // System.out.println(menu.getPizza(6));
 
-        System.out.printf("%-50.50s %-50.50s%n", "Column 1", "Column 2");
+
 
         // Add loop to keep adding pizzas
+
         var programIsRunning = true;
         OrderList orderList = new OrderList();
+        Scanner sc = new Scanner(System.in);
+        String printOption = """
+                Press 1: to add pizza
+                Press 2: to remove a pizza from the order list
+                Press 9: to quit""";
 
-        while (programIsRunning) {
-            Order order = new Order();
+        System.out.println(printOption);
+        while(programIsRunning) {
+        var input = sc.nextLine();
+            if (input.toLowerCase().startsWith("1")) {
+                Order order = new Order();
 
-            order.addPizza();
-            order.pickUpTime();
-            Invoice.printInvoice(order);
+                order.addPizza();
+                order.pickUpTime();
+                Invoice.printInvoice(order);
 
-            orderList.addOrder(order);
+                orderList.addOrder(order);
+                UI.drawOrderlistAndMenu(orderList,menu);
+                System.out.println(printOption);
 
-            System.out.println(orderList);
+            } if (input.equalsIgnoreCase("2")){
+                orderList.printOrderList();
+                Order order = new Order();
+                var removeInput = sc.nextInt();
+                orderList.removeOrder(order);
+                orderList.printOrderList();
 
-            programIsRunning = false;
+            } if (input.toLowerCase().startsWith("9")) {
+                System.out.println("Terminating");
+                programIsRunning = false;
+            }
+
         }
+            UI.drawOrderlistAndMenu(orderList, menu);
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

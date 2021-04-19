@@ -96,18 +96,18 @@ public class Order implements Serializable {
             String input2;
             String input3;
 
-            System.out.println("What pizza");
+            System.out.println("What pizza - Type \"quit\"");
             input1 = sc.nextLine();
             if (isQuit(input1)) {
                 break;
             }
-            System.out.println("How many pizzas");
+            System.out.println("How many pizzas - Type \"quit\"");
             input2 = sc.nextLine();
             if (isQuit(input2)) {
                 break;
             }
 
-            System.out.println("Comments");
+            System.out.println("Comments - Press enter to skip");
             input3 = sc.nextLine();
             if (isQuit(input3)) {
                 break;
@@ -122,7 +122,7 @@ public class Order implements Serializable {
     }
 
     private boolean isQuit(String input) {
-        return input.equalsIgnoreCase("quit") || input.isBlank();
+        return input.equalsIgnoreCase("quit");
     }
 
     @Override public String toString() {
