@@ -1,8 +1,9 @@
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.io.Serializable;
 
-public class Order {
+public class Order implements Serializable {
 
     // Temporary setters for testing (FakeMainForTest)
 
@@ -27,9 +28,6 @@ public class Order {
 
     private double totalPrice;
     private String id = new OrderID().getHexStringID();
-    public String getOrderTime() {
-        return orderTime;
-    }
     private String orderTime = getCurrentSimpleTime();
     private Integer pickUpTime;
     private final Scanner sc = new Scanner(System.in);
@@ -39,7 +37,12 @@ public class Order {
     public void pickUpTime() {
         System.out.println("Please add pickup time");
         pickUpTime = sc.nextInt();
+        // TODO: Make if pickUpTime > closing time = error. Do we know closing time?
         System.out.println("Pickup at: " + pickUpTime);
+    }
+
+    public String getOrderTime() {
+        return orderTime;
     }
 
     private String getCurrentSimpleTime() {
@@ -60,6 +63,7 @@ public class Order {
     }
 
     public double getTotalPrice() {
+        double totalPrice = 0;
         for (OrderLineItem lineItem : listOfOrderLineItems) {
             totalPrice += lineItem.getPrice() + getPriceOfExtras(lineItem);
         }

@@ -38,6 +38,7 @@ public class PizzaMain {
                 Press 9: to quit""";
 
         System.out.println(printOption);
+
         while(programIsRunning) {
         var input = sc.nextLine();
             if (input.equals("1")) {
@@ -45,7 +46,7 @@ public class PizzaMain {
 
                 order.addPizza();
                 order.pickUpTime();
-                Invoice.printInvoice(order);
+               // Invoice.printInvoice(order);
 
                 orderList.addOrder(order);
                 UI.drawOrderlistAndMenu(orderList, menu);
