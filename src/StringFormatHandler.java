@@ -1,16 +1,15 @@
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class StringFormatHandler {
 
     public String formatLineForOrderList(Order o) {
+        //%x =>hexadecimal
         var template = "ORDERNR=%s;PAID=%s;ORDER_TOTAL=%.2f;ORDER_TIME=%s;ORDER_ITEMS=%s\n";
         var filledInTemplate = String.format(template, o.getId(), o.getIsPaid().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getListOfOrderLineItems()));
         return filledInTemplate;
     }
 
-    private String formatOrderItems(ArrayList<OrderLineItem> listOfOrderLineItems) {
+    private String formatOrderItems(Collection<OrderLineItem> listOfOrderLineItems) {
         var formatted = "";
         var template = "PIZZA=%s;COUNT=%d;PRICE=%.2f";
         for(var lineItem : listOfOrderLineItems) {
@@ -29,7 +28,6 @@ public class StringFormatHandler {
             // ordreNr: i alt:
             report += String.format(template, order[0].substring("ORDERNR=".length()), order[2].substring("ORDER_TOTAL=".length()));
         }
-        report += String.format("Dagens omsætning: %.2f DKK", revenue);
 
         return report;
 

@@ -1,93 +1,123 @@
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class PizzaMain {
+    private static Boolean shouldContinueRunning = true;
+    private static Boolean firstRun = true;
+    private static final Scanner sc = new Scanner(System.in);
 
-    static OrderList newList = new OrderList();
+    private static final String UIOptions =
+                """
+                1: Opret ny bestilling
+                2: Markér en bestilling som betalt
+                3: Fjern en bestilling
+                4: Udskriv dagens bestillinger
+                9: Gem og luk program
+                """;
 
-    public static void main(String[] args) throws IOException {
-        //do stuff
-        Menu menu = null;
+    private static final OrderList orderList = new OrderList();
+    private static Menu menu;
+
+     static {
         try {
-            menu = new Menu();
+            menu = new Menu("resources/menu.tsv");
         } catch (FileNotFoundException e) {
-            System.out.println("woops");
+            e.printStackTrace();
         }
-
-
-        UI.drawHeader();
-        UI.drawMenu(menu);
-       // System.out.println(menu);
-
-       // System.out.println(menu.getPizza(6));
-
-
-
-        // Add loop to keep adding pizzas
-
-        var programIsRunning = true;
-        OrderList orderList = new OrderList();
-        Scanner sc = new Scanner(System.in);
-        String printOption = """
-                Press 1: to add pizza
-                Press 2: to remove a pizza from the order list
-                Press 3: Mark order as paid.
-                Press 4: Print daily orders
-                Press 9: to quit""";
-
-        System.out.println(printOption);
-
-        while(programIsRunning) {
-        var input = sc.nextLine();
-            if (input.equals("1")) {
-                Order order = new Order();
-
-                order.addPizza();
-                order.pickUpTime();
-               // Invoice.printInvoice(order);
-
-                orderList.addOrder(order);
-                UI.drawOrderlistAndMenu(orderList, menu);
-                System.out.println(printOption);
-
-            } if (input.equals("3")) {
-                System.out.println("Inset order number to mark as paid:");
-                input = sc.nextLine();
-                orderList.changeOrderStatus(input, true);
-
-            } if (input.equals("4")){
-
-
-            } if (input.equals("2")){
-                var idToRemove = sc.nextLine();
-                orderList.removeOrder(idToRemove);
-
-            } if (input.equals("9")) {
-                System.out.println("Terminating");
-                // PRINT DAILY REPORT
-                programIsRunning = false;
-            }
-
-        }
-            UI.drawOrderlistAndMenu(orderList, menu);
-
     }
 
+    public static void main(String[] args) {
 
+        while (shouldContinueRunning) {
+            if (firstRun) {
+                firstRun = false;
+                UI.clear();
+                UI.drawHeader();
+                UI.drawMenu(menu.getAllPizzas());
+                System.out.println(UIOptions);
+            } else {
+                UI.clear();
+                UI.drawHeader();
+                UI.drawOrderlistAndMenu(orderList.getOrders(), menu.getAllPizzas());
+                System.out.println(UIOptions);
+            }
 
+            String input = sc.nextLine();
 
+            if (input.equalsIgnoreCase( "1")) {
+                Order order = new Order();
 
+                makeNewOrder(order);
+                setPickUpTime(order);
 
+                orderList.addOrder(order);
+            } else if ( input.equalsIgnoreCase("2")) {
+                    markOrderAsPaid();
+            } else if ( input.equalsIgnoreCase("3")) {
+                    removeOrder();
+            } else if ( input.equalsIgnoreCase("4")) {
+                    //TODO: Print daily report
+            } else if ( input.equalsIgnoreCase("9")) {
+                System.out.println("Lukker...");
+                // TODO: PRINT DAILY REPORT
+                shouldContinueRunning = false;
+            }
+        }
+    }
 
+    public static void makeNewOrder(Order order) {
 
+         while (true) {
+            System.out.print("Pizza nr: ");
+            String userInputPizzaId = sc.nextLine();
+            if (isQuit(userInputPizzaId)) {
+                break;
+            }
 
+            System.out.print("Antal: ");
+            String userInputPizzaAmount = sc.nextLine();
+            if (isQuit(userInputPizzaAmount)) {
+                break;
+            }
 
+            System.out.println("Kommentar: ");
+            String userInputComment = sc.nextLine();
+            if (isQuit(userInputComment)) {
+                break;
+            }
 
+            Pizza pizza = menu.getPizza(Integer.parseInt(userInputPizzaId));
+            Integer quantity = Integer.parseInt(userInputPizzaAmount);
+            String comment = userInputComment;
 
+            order.addLineItem( new OrderLineItem(pizza, quantity, comment) );
+        }
+    }
 
+    public static void setPickUpTime(Order order) {
+         System.out.print("Tidspunkt for afhenting: ");
+         Integer pickUpTime = sc.nextInt();
+         order.setPickUpTime( pickUpTime );
+    }
 
+    public static void markOrderAsPaid() {
+         System.out.print("Indtast bestillings nr: ");
+         String userInputOrderID = sc.nextLine();
+         orderList.changeOrderStatus(userInputOrderID, true);
+    }
 
-
+    public static void removeOrder() {
+         String userInputIdToRemove = sc.nextLine();
+         orderList.removeOrder(userInputIdToRemove);
+    }
+    private static boolean isQuit(String str) {
+        return (str.equalsIgnoreCase("quit") ||
+                str.equalsIgnoreCase("afslut") ||
+                str.equalsIgnoreCase("luk") ||
+                str.equalsIgnoreCase("stop") ||
+                str.equalsIgnoreCase("exit") ||
+                str.equalsIgnoreCase("end") ||
+                str.equalsIgnoreCase("q")
+        );
+    }
 }

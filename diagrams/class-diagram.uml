@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/simon/eclipse/Group-Project---Mario-s-Pizza/src</OriginalElement>
+  <nodes>
+    <node x="0.0" y="386.0">Order</node>
+    <node x="238.0" y="685.0">Pizza</node>
+    <node x="655.0" y="386.0">PizzaMain</node>
+    <node x="258.0" y="896.0">Invoice</node>
+    <node x="443.0" y="685.0">StringFormatHandler</node>
+    <node x="0.0" y="0.0">UI</node>
+    <node x="0.0" y="685.0">OrderLineItem</node>
+    <node x="501.0" y="896.0">DailyReport</node>
+    <node x="512.0" y="0.0">OrderList</node>
+    <node x="322.0" y="386.0">Menu</node>
+    <node x="0.0" y="896.0">OrderID</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="0.6639839034205232" showDependencies="false" x="438.0" y="487.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

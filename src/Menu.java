@@ -6,8 +6,8 @@ public class Menu {
 	
 	private final Map<Integer, Pizza> pizzas; 
 
-	public Menu() throws FileNotFoundException {
-		this.pizzas = loadMenu("resources/menu.tsv");
+	public Menu(String filePath) throws FileNotFoundException {
+		this.pizzas = loadMenu(filePath);
 	}
 
 	public Collection<Pizza> getAllPizzas() { return this.pizzas.values(); }
@@ -63,9 +63,5 @@ public class Menu {
 	
 	private static Integer parseInteger(String str) {
 		return Integer.parseInt(str.strip());
-	}
-
-	public Map<Integer,Pizza>getPizzaMenu(){
-		return this.pizzas;
 	}
 }

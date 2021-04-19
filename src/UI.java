@@ -1,9 +1,5 @@
-import java.io.Console;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Collection;
 
 public class UI {
     //UI SETTINGS
@@ -42,12 +38,12 @@ public class UI {
 
     //add padding to string
     private static String padString(String str, int len, String ch) {
-        return str + ch.repeat( len - str.length() );
+        return str + ch.repeat( Integer.max(0, len - str.length()) );
     }
 
     //to create horizontal lines, example: border
     private static String fill(String border, int len) {
-        return border.repeat(len);
+        return border.repeat( Integer.max(0, len));
     }
     //centers string with a given column width
     private static String centerString(String header,int len,String filler) {
@@ -105,16 +101,16 @@ public class UI {
     }
 
     //creates OrderList String and returns it
-    public static String makeOrderList(OrderList orders) {
+    public static String makeOrderList(Collection<Order> orders) {
         String orderEntries = "";
-        for (Order o : orders.getOrderList().values()) {
+        for (Order o : orders) {
             String orderEntry = "[Ordre #" + o.getId() +" | Pickup Time: " + o.getPickUpTime() + "]";
 
             orderEntry = centerString(orderEntry,maxOrderListEntryLength,hFill);
 
             orderEntry = padString(orderEntry,maxOrderListEntryLength,hFill) + "\n";
 
-            for (OrderLineItem l : o.getListOfOrderLineItems()) {
+            for (OrderLineItem l : o.getLineItems()) {
                 orderEntry += "x"+l.getAmount() + " #"+l.getPizza().getId()+ " " + l.getPizza().getName();
 
                 if (l.getComment().length() > 0) {orderEntry += " (" + l.getComment() + ")";}
@@ -123,7 +119,7 @@ public class UI {
             }
 
             orderEntries += orderEntry;
-            String pricePoint = String.valueOf(numberShorten(o.getTotalPrice()));
+            String pricePoint = String.valueOf(numberShorten(o.getPrice()));
 
             String orderTotal = "Total: " + pricePoint + ",- DKK";
 
@@ -137,11 +133,11 @@ public class UI {
     }
 
     //creates Menu as a String and returns it
-    public static String makeMenu(Menu menu){
+    public static String makeMenu(Collection<Pizza> menu){
         String pizzaEntries ="";
 
         //Create massive pizza menu string
-        for (Pizza p : menu.getAllPizzas()) {
+        for (Pizza p : menu) {
 
             String currentPizzaEntry = p.getId() +". " + p.getName() + " : "+p.getDescription();
 
@@ -156,15 +152,15 @@ public class UI {
         return addBorder(pizzaEntries,"Menu",hPadding);
     }
 
-    public static void drawOrderList(OrderList orders) {
+    public static void drawOrderList(Collection<Order> orders) {
         System.out.println(makeOrderList(orders));
     }
 
-    public static void drawMenu(Menu menu){
+    public static void drawMenu(Collection<Pizza> menu){
         System.out.println(makeMenu(menu));
     }
 
-    public static void drawOrderlistAndMenu(OrderList orders,Menu menu) {
+    public static void drawOrderlistAndMenu(Collection<Order> orders, Collection<Pizza> menu) {
         String[] ordersStringArray = makeOrderList(orders).split("\n");
         String[] menuStringArray = makeMenu(menu).split("\n");
         int maxLines = Math.max(ordersStringArray.length,menuStringArray.length);

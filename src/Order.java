@@ -1,45 +1,13 @@
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.Serializable;
 
 public class Order implements Serializable {
-
-    // Temporary setters for testing (FakeMainForTest)
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public void setPickUpTime(int pickUpTime) {
-        this.pickUpTime = pickUpTime;
-    }
-
-    public void setListOfOrderLineItems(ArrayList<OrderLineItem> listOfOrderLineItems) {
-        this.listOfOrderLineItems = listOfOrderLineItems;
-    }
-    //don't remove this setter. OrderList uses it.
-    public void setIsPaid(Boolean isPaid) {
-        this.isPaid = isPaid;
-    }
-
-    private double totalPrice;
     private String id = new OrderID().getHexStringID();
     private String orderTime = getCurrentSimpleTime();
-    private Integer pickUpTime;
-    private final Scanner sc = new Scanner(System.in);
-    private ArrayList<OrderLineItem> listOfOrderLineItems = new ArrayList<>();
-    private Boolean isPaid = false;
-
-    public void pickUpTime() {
-        System.out.println("Please add pickup time");
-        pickUpTime = sc.nextInt();
-        // TODO: Make if pickUpTime > closing time = error. Do we know closing time?
-        System.out.println("Pickup at: " + pickUpTime);
-    }
+    private final Collection<OrderLineItem> lineItems = new ArrayList<>();
+    private Integer pickUpTime = 0;
+    private Boolean hasBeenPaidFor = false;
 
     public String getOrderTime() {
         return orderTime;
@@ -50,6 +18,7 @@ public class Order implements Serializable {
             return timeStamp.substring(9, 13); // is this the right index?
     }
 
+
     private String fetchCompleteSystemTime() {
         return new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
     }
@@ -58,81 +27,39 @@ public class Order implements Serializable {
         return id;
     }
 
-    public int getPickUpTime(){
+    public Double getPrice() {
+        return this.lineItems.stream().map(OrderLineItem::getPrice).reduce(0.0, Double::sum);
+    }
+
+    public Collection<OrderLineItem> getLineItems() {
+        return lineItems;
+    }
+    public void addLineItem(OrderLineItem lineItem) {
+        this.lineItems.add(lineItem);
+    }
+
+    public Boolean getHasBeenPaidFor() {
+        return this.hasBeenPaidFor;
+    }
+    public void setHasBeenPaidFor(Boolean hasBeenPaidFor) {
+        this.hasBeenPaidFor = hasBeenPaidFor;
+    }
+
+    public Integer getPickUpTime(){
         return pickUpTime;
     }
-
-    public double getTotalPrice() {
-        double totalPrice = 0;
-        for (OrderLineItem lineItem : listOfOrderLineItems) {
-            totalPrice += lineItem.getPrice() + getPriceOfExtras(lineItem);
-        }
-        return totalPrice;
-    }
-
-    private Double getPriceOfExtras(OrderLineItem item) {
-        var amount = 0;
-        String[] splitted = item.getComment().split(",");
-        for (var comment : splitted) {
-            if(comment.contains("+") || comment.toLowerCase(Locale.ROOT).contains("add")) {
-                amount += 10;
-            }
-        }
-        return Double.valueOf(amount);
-    }
-
-    public ArrayList<OrderLineItem> getListOfOrderLineItems() {
-        return listOfOrderLineItems;
-    }
-
-    public Boolean getIsPaid() {
-        return isPaid;
-    }
-
-    public void addPizza() throws FileNotFoundException {
-        Menu menu = new Menu();
-        Map<Integer, Pizza> pizzaMenu = menu.getPizzaMenu();
-
-        while (true) {
-            String input1;
-            String input2;
-            String input3;
-
-            System.out.println("What pizza - Type \"quit\"");
-            input1 = sc.nextLine();
-            if (isQuit(input1)) {
-                break;
-            }
-            System.out.println("How many pizzas - Type \"quit\"");
-            input2 = sc.nextLine();
-            if (isQuit(input2)) {
-                break;
-            }
-
-            System.out.println("Comments - Press enter to skip");
-            input3 = sc.nextLine();
-            if (isQuit(input3)) {
-                break;
-            }
-
-            Pizza pizza = pizzaMenu.get(Integer.parseInt(input1));
-            Integer quantity = Integer.parseInt(input2);
-            OrderLineItem orderLine = new OrderLineItem(pizza,quantity, input3);
-
-            listOfOrderLineItems.add(orderLine);
-        }
-    }
-
-    private boolean isQuit(String input) {
-        return input.equalsIgnoreCase("quit");
+    public void setPickUpTime(Integer pickUpTime) {
+        this.pickUpTime = pickUpTime;
     }
 
     @Override public String toString() {
-        String stringBOI = "";
-        for (OrderLineItem i : listOfOrderLineItems) {
-            stringBOI += i.toString();
+        StringBuilder orderString = new StringBuilder();
+
+        for (OrderLineItem lineItem: lineItems) {
+            orderString.append(lineItem).append(String.format("%n"));
         }
-            stringBOI += getTotalPrice() + " DKK";
-        return stringBOI;
+
+        orderString.append( getPrice()).append(" DKK");
+        return orderString.toString();
     }
 }
