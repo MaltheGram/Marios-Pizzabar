@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class PizzaMain {
@@ -61,19 +62,19 @@ public class PizzaMain {
          while (true) {
             System.out.print("Pizza nr: ");
             String userInputPizzaId = sc.nextLine();
-            if (isQuit(userInputPizzaId)) {
+            if (UserInput.isQuit(userInputPizzaId)) {
                 break;
             }
 
             System.out.print("Antal: ");
             String userInputPizzaAmount = sc.nextLine();
-            if (isQuit(userInputPizzaAmount)) {
+            if (UserInput.isQuit(userInputPizzaAmount)) {
                 break;
             }
 
             System.out.println("Kommentar: ");
             String userInputComment = sc.nextLine();
-            if (isQuit(userInputComment)) {
+            if (UserInput.isQuit(userInputComment)) {
                 break;
             }
 
@@ -87,7 +88,7 @@ public class PizzaMain {
 
     public static void setPickUpTime(Order order) {
          System.out.print("Tidspunkt for afhenting: ");
-         Integer pickUpTime = sc.nextInt();
+         LocalTime pickUpTime = UserInput.parseLocalTime( sc.nextLine() );
          order.setPickUpTime( pickUpTime );
     }
 
@@ -100,15 +101,5 @@ public class PizzaMain {
     public static void removeOrder() {
          String userInputIdToRemove = sc.nextLine();
          orderList.removeOrder(userInputIdToRemove);
-    }
-    private static boolean isQuit(String str) {
-        return (str.equalsIgnoreCase("quit") ||
-                str.equalsIgnoreCase("afslut") ||
-                str.equalsIgnoreCase("luk") ||
-                str.equalsIgnoreCase("stop") ||
-                str.equalsIgnoreCase("exit") ||
-                str.equalsIgnoreCase("end") ||
-                str.equalsIgnoreCase("q")
-        );
     }
 }
