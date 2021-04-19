@@ -67,10 +67,11 @@ public class OrderList {
         }
     }
 
-    public void changeOrderStatus(Order o, Boolean paid) {
+    public void changeOrderStatus(String orderNR, Boolean paid) {
+        var o = orders.get(orderNR);
 
         // remove order from order arrayList and file
-        removeOrder(o.getId());
+        removeOrder(orderNR);
         // add order back
         o.setIsPaid(paid);
 
@@ -80,8 +81,6 @@ public class OrderList {
     public void removeOrder(String id) {
         removeOrderFromFile(orders.get(id));
         orders.remove(id);
-
-
     }
 
     /* https://stackoverflow.com/a/45784174

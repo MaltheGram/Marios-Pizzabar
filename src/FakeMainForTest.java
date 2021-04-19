@@ -52,7 +52,7 @@ public class FakeMainForTest {
 
         //orders.removeOrder(fakeOrder3);
 
-        orders.changeOrderStatus(fakeOrder2,true);
+        orders.changeOrderStatus(fakeOrder2.getId(),true);
     }
 
     private static Pizza makeFakePizza(Integer id) {
