@@ -80,7 +80,7 @@ public class OrderList {
 
     public void removeOrder(String id) {
         removeOrderFromFile(orders.get(id));
-        //orders.remove(id);
+        orders.remove(id);
     }
 
     /* https://stackoverflow.com/a/45784174
@@ -90,6 +90,7 @@ public class OrderList {
     private void removeOrderFromFile(Order o)  {
         File dailyLog = selectFile();
         var id = o.getId();
+        //System.out.println("Removing order with id: " + id);
        // System.out.println("Removing order with id: " + id);
         List<String> out = null;
         try {

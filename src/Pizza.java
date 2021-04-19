@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Pizza implements Serializable {
+public class Pizza {
 	
 	private final Integer id;
 	private final String name;

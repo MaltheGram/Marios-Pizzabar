@@ -1,9 +1,8 @@
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.io.Serializable;
 
-public class Order implements Serializable {
+public class Order {
 
     // Temporary setters for testing (FakeMainForTest)
 
@@ -40,7 +39,6 @@ public class Order implements Serializable {
     public void pickUpTime() {
         System.out.println("Please add pickup time");
         pickUpTime = sc.nextInt();
-        // Make if pickUpTime > closing time = error. Do we know closing time?
         System.out.println("Pickup at: " + pickUpTime);
     }
 

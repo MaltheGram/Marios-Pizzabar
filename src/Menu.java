@@ -1,9 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.util.*;
 
-public class Menu implements Serializable {
+public class Menu {
 	
 	private final Map<Integer, Pizza> pizzas; 
 

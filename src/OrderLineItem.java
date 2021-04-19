@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class OrderLineItem implements Serializable {
+public class OrderLineItem {
     private final Pizza pizza;
     private final Integer amount;
     private final String comment;
