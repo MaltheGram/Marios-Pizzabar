@@ -45,9 +45,10 @@ public class FakeMainForTest {
 
         //MARK ADDED THIS SHIT vvv
         UI.drawHeader();
-        UI.drawOrderlist(orders);
+        UI.drawOrderList(orders);
         UI.drawMenu(menu);
 
+        UI.drawOrderlistAndMenu(orders,menu);
 
         orders.removeOrder(fakeOrder3);
 
