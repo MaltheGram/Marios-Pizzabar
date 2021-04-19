@@ -41,7 +41,7 @@ public class FakeMainForTest {
         orders.addOrder(fakeOrder2);
         orders.addOrder(fakeOrder3);
 
-        orders.printOrderList();
+
 
         //MARK ADDED THIS SHIT vvv
         UI.drawHeader();
@@ -53,6 +53,7 @@ public class FakeMainForTest {
         //orders.removeOrder(fakeOrder3);
 
         orders.changeOrderStatus(fakeOrder2.getId(),true);
+        orders.showDailyReport();
     }
 
     private static Pizza makeFakePizza(Integer id) {

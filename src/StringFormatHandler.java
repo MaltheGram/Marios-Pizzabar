@@ -1,9 +1,10 @@
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StringFormatHandler {
 
     public String formatLineForOrderList(Order o) {
-        //%x =>hexadecimal
         var template = "ORDERNR=%s;PAID=%s;ORDER_TOTAL=%.2f;ORDER_TIME=%s;ORDER_ITEMS=%s\n";
         var filledInTemplate = String.format(template, o.getId(), o.getIsPaid().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getListOfOrderLineItems()));
         return filledInTemplate;
@@ -18,15 +19,19 @@ public class StringFormatHandler {
         return "[" + formatted + "]";
     }
 
-    public String humanReadableFileText(OrderList list, String date) {
-        var totalOrder = "DAILY REPORT FOR " + date + ".";
-        for(Order o : list.getOrderList().values()) {
-            var template = "Order Nr:%s;Was paid:%s;Order total:%.2f;Order time:%s;Pizzas:%s\n";
-            var filledInTemplate = String.format(template, o.getId(), o.getIsPaid().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getListOfOrderLineItems()));
-            totalOrder += filledInTemplate;
+    public String formatDailyReport(List<String[]> paidOrders, String date, Double revenue) {
+        // modify date to have dots in between
+        //var formattedDate =
+        var report = "";
+        report += "DAGENS ORDRE RAPPORT "+ date +"\n********************\n";
+        var template = "orderNr: %s, i alt: %s \n";
+        for(var order : paidOrders) {
+            // ordreNr: i alt:
+            report += String.format(template, order[0].substring("ORDERNR=".length()), order[2].substring("ORDER_TOTAL=".length()));
         }
+        report += String.format("Dagens omsætning: %.2f DKK", revenue);
 
-        return totalOrder;
+        return report;
 
     }
 }

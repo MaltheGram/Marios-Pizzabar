@@ -1,4 +1,5 @@
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,22 +12,15 @@ import java.util.stream.Collectors;
    - When order is paid, change isPaid flag to true.
    If order flag is false when Mario prints daily revenue report, ignore that order
    - Make DailyReport class
+   - make SimpleDateTime into a separate class (use in Order and OrderList)
  */
 
 
 public class OrderList {
-   //Getting environment variable for user profile, this is pre/defined by Windows
-    private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
+    private static final Map<String, Order> orders = new HashMap<>();
     private final String dataDirectory = "Mario-s-Pizza-data";
-
-    private static Map<String, Order> orders = new HashMap<>();
-
-    private File selectFile(){
-        String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
-        Path file = Paths.get(myDocuments, dataDirectory, todaysFile);
-
-        return file.toFile();
-    }
+    //Getting environment variable for user profile, this is pre/defined by Windows
+    private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
 
     public void addOrder(Order o) {
         File dailyLog = selectFile();
@@ -37,18 +31,53 @@ public class OrderList {
 
         writeOrderToFile(o, dailyLog);
     }
+
+    public void changeOrderStatus(String orderNR, Boolean paid) {
+        var o = orders.get(orderNR);
+
+        // remove order from order arrayList and file
+        removeOrder(orderNR);
+        // add order back
+        o.setIsPaid(paid);
+
+        addOrder(o);
+    }
     /* mkdir() is part of File class, which creates a directory denoted by an abstract file name (returns true if directory was created)
      The java.io.File.getParentFile() method returns the abstract pathname of this abstract pathname's parent, or null if this pathname does not name a parent directory.
      */
 
+    public void removeOrder(String id) {
+        removeOrderFromFile(orders.get(id));
+        orders.remove(id);
+    }
+
+    public Map<String, Order> getOrderList() {
+        return orders;
+    }
+
+    public void showDailyReport() {
+        DailyReport report = new DailyReport();
+        var formattedDate = new SimpleDateFormat("d.M.yyyy").format(new Date());
+        report.printDailyReport(selectFile(), formattedDate);
+    }
+
+    private File selectFile() {
+        String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
+        Path file = Paths.get(myDocuments, dataDirectory, todaysFile);
+
+        return file.toFile();
+    }
+
+    private String getCurrentSimpleDate() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+        return timeStamp;
+    }
+
     private void ensureThatFileExists(File dailyLog) {
         try {
-            if(!dailyLog.exists()) {
+            if (!dailyLog.exists()) {
                 dailyLog.getParentFile().mkdirs();
                 dailyLog.createNewFile();
-                System.out.println("created log file for day: " + dailyLog.getName());
-            } else {
-                System.out.println("file exists for day: " + dailyLog.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,31 +96,13 @@ public class OrderList {
         }
     }
 
-    public void changeOrderStatus(String orderNR, Boolean paid) {
-        var o = orders.get(orderNR);
-
-        // remove order from order arrayList and file
-        removeOrder(orderNR);
-        // add order back
-        o.setIsPaid(paid);
-
-        addOrder(o);
-    }
-
-    public void removeOrder(String id) {
-        removeOrderFromFile(orders.get(id));
-        orders.remove(id);
-    }
-
     /* https://stackoverflow.com/a/45784174
-    * This method reads all lines in the file, stashes the ones that DON'T contain the orderId (hexadecimal),
-    * and then writes those into the file
-    * Collectors class implement various reduction operations, such as accumulating elements into collections, summarizing elements according to various criteria, etc.*/
-    private void removeOrderFromFile(Order o)  {
+     * This method reads all lines in the file, stashes the ones that DON'T contain the orderId (hexadecimal),
+     * and then writes those into the file
+     * Collectors class implement various reduction operations, such as accumulating elements into collections, summarizing elements according to various criteria, etc.*/
+    private void removeOrderFromFile(Order o) {
         File dailyLog = selectFile();
         var id = o.getId();
-        //System.out.println("Removing order with id: " + id);
-       // System.out.println("Removing order with id: " + id);
         List<String> out = null;
         try {
             out = Files.lines(dailyLog.toPath())
@@ -100,22 +111,6 @@ public class OrderList {
             Files.write(dailyLog.toPath(), out, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private String getCurrentSimpleDate() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        return timeStamp.substring(0, 8);
-    }
-
-    public Map<String, Order> getOrderList() {
-        return orders;
-    }
-
-    public void printOrderList() {
-        System.out.println("printing order list:\n");
-        for(var o : orders.values()) {
-            System.out.println(getOrderList().values());
         }
     }
 
