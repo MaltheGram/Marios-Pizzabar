@@ -8,14 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/*todo:
-   - When order is paid, change isPaid flag to true.
-   If order flag is false when Mario prints daily revenue report, ignore that order
-   - Make DailyReport class
-   - make SimpleDateTime into a separate class (use in Order and OrderList)
- */
-
-
 public class OrderList {
     private static final Map<String, Order> orders = new HashMap<>();
     private final String dataDirectory = "Mario-s-Pizza-data";
@@ -35,9 +27,8 @@ public class OrderList {
     public void changeOrderStatus(String orderNR, Boolean paid) {
         var o = orders.get(orderNR);
 
-        // remove order from order arrayList and file
         removeOrder(orderNR);
-        // add order back
+
         o.setIsPaid(paid);
 
         addOrder(o);
@@ -113,5 +104,4 @@ public class OrderList {
             e.printStackTrace();
         }
     }
-
 }

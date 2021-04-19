@@ -7,7 +7,6 @@ public class DailyReport {
 
     public void printDailyReport(File dailyLog, String date) {
 
-    // sorts out lines with isPaid false
         try {
             Scanner sc = new Scanner(dailyLog);
             while(sc.hasNextLine()) {
@@ -27,7 +26,7 @@ public class DailyReport {
         var total = .0;
         for(var order : paidOrders) {
             var v= order[2].substring("ORDER_TOTAL=".length());
-            total += Double.parseDouble(v);// must be a more generic way to do this
+            total += Double.parseDouble(v);
         }
         return total;
     }
