@@ -49,7 +49,7 @@ public class FakeMainForTest {
         UI.drawMenu(menu);
 
 
-        orders.removeOrder(fakeOrder3);
+        //orders.removeOrder(fakeOrder3);
 
         orders.changeOrderStatus(fakeOrder2,true);
     }
@@ -69,7 +69,6 @@ public class FakeMainForTest {
 
         return order;
     }
-
 }
 
 

@@ -4,7 +4,7 @@ public class StringFormatHandler {
 
     public String formatLineForOrderList(Order o) {
         //%x =>hexadecimal
-        var template = "ORDERNR=%x;PAID=%s;ORDER_TOTAL=%.2f;ORDER_TIME=%s;ORDER_ITEMS=%s\n";
+        var template = "ORDERNR=%s;PAID=%s;ORDER_TOTAL=%.2f;ORDER_TIME=%s;ORDER_ITEMS=%s\n";
         var filledInTemplate = String.format(template, o.getId(), o.getIsPaid().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getListOfOrderLineItems()));
         return filledInTemplate;
     }
@@ -20,8 +20,8 @@ public class StringFormatHandler {
 
     public String humanReadableFileText(OrderList list, String date) {
         var totalOrder = "DAILY REPORT FOR " + date + ".";
-        for(Order o : list.getOrderList()) {
-            var template = "Oreder Nr:%x;Was paid:%s;Order total:%.2f;Order time:%s;Pizzas:%s\n";
+        for(Order o : list.getOrderList().values()) {
+            var template = "Order Nr:%s;Was paid:%s;Order total:%.2f;Order time:%s;Pizzas:%s\n";
             var filledInTemplate = String.format(template, o.getId(), o.getIsPaid().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getListOfOrderLineItems()));
             totalOrder += filledInTemplate;
         }

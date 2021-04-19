@@ -23,25 +23,21 @@ public class PizzaMain {
         System.out.printf("%-50.50s %-50.50s%n", "Column 1", "Column 2");
 
         // Add loop to keep adding pizzas
-
-        Order order1 = new Order();
-        Order order2 = new Order();
-
-        order1.addPizza();
-        order1.pickUpTime();
-        Invoice.printInvoice(order1);
-
-        order2.addPizza();
-        order2.pickUpTime();
-        Invoice.printInvoice(order2);
-
+        var programIsRunning = true;
         OrderList orderList = new OrderList();
-        orderList.addOrder(order1);
-        orderList.addOrder(order2);
 
-        System.out.println(orderList);
+        while (programIsRunning) {
+            Order order = new Order();
 
-        
+            order.addPizza();
+            order.pickUpTime();
+            Invoice.printInvoice(order);
+
+            orderList.addOrder(order);
+
+            System.out.println(orderList);
+
+            programIsRunning = false;
+        }
     }
-
 }

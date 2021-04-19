@@ -112,7 +112,7 @@ public class UI {
     }
     public static void drawOrderlist(OrderList orders) {
         String orderEntries ="";
-        for (Order o : orders.getOrderList()) {
+        for (Order o : orders.getOrderList().values()) {
             for (OrderLineItem l : o.getListOfOrderLineItems()) {
                 orderEntries += "x"+l.getAmount() + " #"+l.getPizza().getId()+ " " + l.getPizza().getName();
 

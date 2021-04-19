@@ -7,7 +7,7 @@ public class Order implements Serializable {
 
     // Temporary setters for testing (FakeMainForTest)
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     public void setTotalPrice(double totalPrice) {
@@ -27,7 +27,7 @@ public class Order implements Serializable {
     }
 
     private double totalPrice;
-    private Long id = new OrderID().getNewOrderID();
+    private String id = new OrderID().getHexStringID();
     public String getOrderTime() {
         return orderTime;
     }
@@ -53,7 +53,7 @@ public class Order implements Serializable {
         return new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
