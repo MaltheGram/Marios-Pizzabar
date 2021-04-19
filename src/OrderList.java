@@ -39,6 +39,9 @@ public class OrderList {
 
         writeOrderToFile(o, dailyLog);
     }
+    /* mkdir() is part of File class, which creates a directory denoted by an abstract file name (returns true if directory was created)
+     The java.io.File.getParentFile() method returns the abstract pathname of this abstract pathname's parent, or null if this pathname does not name a parent directory.
+     */
 
     private void ensureThatFileExists(File dailyLog) {
         try {
@@ -54,9 +57,11 @@ public class OrderList {
         }
     }
 
+    /*File class is an abstract representation of file and directory path names.
+    java.nio.file package overcomes many of the limitations of the java.io.File class (but requires the classes that use it to implement the Serializable interface)*/
     private void writeOrderToFile(Order o, File dailyLog) {
         try {
-            var stringToAppend = new StringFormatHandler().formatLine(o);
+            var stringToAppend = new StringFormatHandler().formatLineForOrderList(o);
 
             Files.write(dailyLog.toPath(), stringToAppend.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -66,9 +71,9 @@ public class OrderList {
 
     public void changeOrderStatus(Order o, Boolean paid) {
 
-        // remove order from file
+        // remove order from order arrayList and file
         removeOrder(o);
-        // add order back into file with changed flag
+        // add order back
         o.setIsPaid(paid);
 
         addOrder(o);
@@ -79,9 +84,11 @@ public class OrderList {
 
         removeOrderFromFile(o);
     }
+
     /* https://stackoverflow.com/a/45784174
     * This method reads all lines in the file, stashes the ones that DON'T contain the orderId (hexadecimal),
-    * and then writes those into the file */
+    * and then writes those into the file
+    * Collectors class implement various reduction operations, such as accumulating elements into collections, summarizing elements according to various criteria, etc.*/
     private void removeOrderFromFile(Order o)  {
         File dailyLog = selectFile();
         var hexOrderId = Long.toHexString(o.getId());
@@ -113,8 +120,9 @@ public class OrderList {
         }
     }
 
-    public String toString() {
+ /*   public String toString() {
         // all information of isPaid true orders, incl. orderID
+        var humanReadableFileContent = new StringFormatHandler().humanReadableFileText(this, getCurrentSimpleDate());
         return null;
-    }
+    }*/
 }

@@ -21,18 +21,16 @@ public class Order implements Serializable {
     public void setListOfOrderLineItems(ArrayList<OrderLineItem> listOfOrderLineItems) {
         this.listOfOrderLineItems = listOfOrderLineItems;
     }
-
+    //don't remove this setter. OrderList uses it.
     public void setIsPaid(Boolean isPaid) {
         this.isPaid = isPaid;
     }
 
     private double totalPrice;
     private Long id = new OrderID().getNewOrderID();
-
     public String getOrderTime() {
         return orderTime;
     }
-
     private String orderTime = getCurrentSimpleTime();
     private Integer pickUpTime;
     private final Scanner sc = new Scanner(System.in);
