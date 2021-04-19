@@ -111,28 +111,30 @@ public class UI {
         //System.out.println(line);
     }
     public static void drawOrderlist(OrderList orders) {
-        String orderEntries ="";
+        String orderEntries = "";
         for (Order o : orders.getOrderList()) {
+            String orderEntry = "[Ordre #" + o.getId() +" | Pickup Time: " + o.getPickUpTime() + "]";
+
+            orderEntry = centerString(orderEntry,maxOrderListEntryLength,hFill);
+
+            orderEntry = padString(orderEntry,maxOrderListEntryLength,hFill) + "\n";
+
             for (OrderLineItem l : o.getListOfOrderLineItems()) {
-                orderEntries += "x"+l.getAmount() + " #"+l.getPizza().getId()+ " " + l.getPizza().getName();
+                orderEntry += "x"+l.getAmount() + " #"+l.getPizza().getId()+ " " + l.getPizza().getName();
 
-                if (l.getComment().length() > 0) {orderEntries += " (" + l.getComment() + ")";}
+                if (l.getComment().length() > 0) {orderEntry += " (" + l.getComment() + ")";}
 
-                orderEntries += "\n";
+                orderEntry += "\n";
             }
 
+            orderEntries += orderEntry;
             String pricePoint = String.valueOf(numberShorten(o.getTotalPrice()));
 
-            String orderTotal = "Total: " + pricePoint + " DKK";
+            String orderTotal = "Total: " + pricePoint + ",- DKK";
 
             orderTotal = padString(orderTotal,maxOrderListEntryLength," ");
 
             orderEntries += orderTotal + "\n";
-
-            //-1 because some dumb rounding stuff idk
-            orderEntries += padString("",maxOrderListEntryLength,hFill) + "\n";
-
-
         }
         //Create massive pizza menu string
 
