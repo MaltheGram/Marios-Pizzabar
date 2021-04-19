@@ -90,7 +90,7 @@ public class OrderList {
     private void removeOrderFromFile(Order o)  {
         File dailyLog = selectFile();
         var id = o.getId();
-        System.out.println("Removing order with id: " + id);
+       // System.out.println("Removing order with id: " + id);
         List<String> out = null;
         try {
             out = Files.lines(dailyLog.toPath())

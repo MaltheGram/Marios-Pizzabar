@@ -33,12 +33,14 @@ public class PizzaMain {
         String printOption = """
                 Press 1: to add pizza
                 Press 2: to remove a pizza from the order list
+                Press 3: Mark order as paid.
+                Press 4: Print daily orders
                 Press 9: to quit""";
 
         System.out.println(printOption);
         while(programIsRunning) {
         var input = sc.nextLine();
-            if (input.toLowerCase().startsWith("1")) {
+            if (input.equals("1")) {
                 Order order = new Order();
 
                 order.addPizza();
@@ -46,18 +48,24 @@ public class PizzaMain {
                 Invoice.printInvoice(order);
 
                 orderList.addOrder(order);
-                UI.drawOrderlistAndMenu(orderList,menu);
+                UI.drawOrderlistAndMenu(orderList, menu);
                 System.out.println(printOption);
 
-            } if (input.equalsIgnoreCase("2")){
-                orderList.printOrderList();
-                Order order = new Order();
-                var removeInput = sc.nextLine();
-                orderList.removeOrder(removeInput);
-                orderList.printOrderList();
+            } if (input.equals("3")) {
+                System.out.println("Inset order number to mark as paid:");
+                input = sc.nextLine();
+                orderList.changeOrderStatus(input, true);
 
-            } if (input.toLowerCase().startsWith("9")) {
+            } if (input.equals("4")){
+
+
+            } if (input.equals("2")){
+                var idToRemove = sc.nextLine();
+                orderList.removeOrder(idToRemove);
+
+            } if (input.equals("9")) {
                 System.out.println("Terminating");
+                // PRINT DAILY REPORT
                 programIsRunning = false;
             }
 
