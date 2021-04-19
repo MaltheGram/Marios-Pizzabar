@@ -119,7 +119,7 @@ public class UI {
             }
 
             orderEntries += orderEntry;
-            String pricePoint = String.valueOf(numberShorten(o.getPrice()));
+            String pricePoint = String.valueOf(numberShorten(o.getTotalPrice()));
 
             String orderTotal = "Total: " + pricePoint + ",- DKK";
 

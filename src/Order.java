@@ -27,7 +27,7 @@ public class Order implements Serializable {
         return id;
     }
 
-    public Double getPrice() {
+    public Double getTotalPrice() {
         return this.lineItems.stream().map(OrderLineItem::getPrice).reduce(0.0, Double::sum);
     }
 
@@ -59,7 +59,7 @@ public class Order implements Serializable {
             orderString.append(lineItem).append(String.format("%n"));
         }
 
-        orderString.append( getPrice()).append(" DKK");
+        orderString.append( getTotalPrice()).append(" DKK");
         return orderString.toString();
     }
 }

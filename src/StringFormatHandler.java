@@ -1,11 +1,12 @@
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class StringFormatHandler {
 
     public String formatLineForOrderList(Order o) {
         //%x =>hexadecimal
         var template = "ORDERNR=%s;PAID=%s;ORDER_TOTAL=%.2f;ORDER_TIME=%s;ORDER_ITEMS=%s\n";
-        var filledInTemplate = String.format(template, o.getId(), o.getIsPaid().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getListOfOrderLineItems()));
+        var filledInTemplate = String.format(template, o.getId(), o.getHasBeenPaidFor().toString(), o.getTotalPrice(), o.getOrderTime(), formatOrderItems(o.getLineItems()));
         return filledInTemplate;
     }
 
