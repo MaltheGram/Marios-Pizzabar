@@ -24,8 +24,8 @@ public class OrderList {
         writeOrderToFile(o, dailyLog);
     }
 
-    public Collection<Order> getOrders() {
-        return this.orders.values();
+    public List<Order> getOrders() {
+        return this.orders.values().stream().sorted().toList();
     }
 
     public void changeOrderStatus(String orderNR, Boolean paid) {

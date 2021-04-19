@@ -23,16 +23,7 @@ public class OrderLineItem {
         Double commentPrice = 0.0;
 
         for (String str : this.comment.split(",") ) {
-            if ( str.toLowerCase().contains("+") ||
-                    str.toLowerCase().contains("plus") ||
-                    str.toLowerCase().contains("ekstra") ||
-                    str.toLowerCase().contains("extra") ||
-                    str.toLowerCase().contains("add") ||
-                    str.toLowerCase().contains("more") ||
-                    str.toLowerCase().contains("xtra") ||
-                    str.toLowerCase().contains("mere") ||
-                    str.toLowerCase().contains("tilføj")
-            ) {
+            if (UserInput.isExtra(str) ) {
                 commentPrice += 10;
             }
         }
