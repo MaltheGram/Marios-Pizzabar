@@ -52,8 +52,8 @@ public class PizzaMain {
             } if (input.equalsIgnoreCase("2")){
                 orderList.printOrderList();
                 Order order = new Order();
-                var removeInput = sc.nextInt();
-                orderList.removeOrder(order);
+                var removeInput = sc.nextLine();
+                orderList.removeOrder(removeInput);
                 orderList.printOrderList();
 
             } if (input.toLowerCase().startsWith("9")) {
