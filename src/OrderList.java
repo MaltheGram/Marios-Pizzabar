@@ -80,7 +80,7 @@ public class OrderList {
 
     public void removeOrder(String id) {
         removeOrderFromFile(orders.get(id));
-        orders.remove(id);
+        //orders.remove(id);
     }
 
     /* https://stackoverflow.com/a/45784174
