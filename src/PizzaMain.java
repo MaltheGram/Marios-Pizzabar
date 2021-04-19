@@ -15,25 +15,27 @@ public class PizzaMain {
         } catch (FileNotFoundException e) {
             System.out.println("woops");
         }
+
+
         UI.drawHeader();
-        //UI.drawMenu();
-        System.out.println(menu);
+        UI.drawMenu(menu);
+       // System.out.println(menu);
 
-        System.out.println(menu.getPizza(6));
+       // System.out.println(menu.getPizza(6));
 
-        System.out.printf("%-50.50s %-50.50s%n", "Column 1", "Column 2");
+
 
         // Add loop to keep adding pizzas
 
         var programIsRunning = true;
         OrderList orderList = new OrderList();
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("""
+        String printOption = """
                 Press 1: to add pizza
                 Press 2: to remove a pizza from the order list
-                Press 9: to quit""");
+                Press 9: to quit""";
 
+        System.out.println(printOption);
         while(programIsRunning) {
         var input = sc.nextLine();
             if (input.toLowerCase().startsWith("1")) {
@@ -44,6 +46,8 @@ public class PizzaMain {
                 Invoice.printInvoice(order);
 
                 orderList.addOrder(order);
+                UI.drawOrderlistAndMenu(orderList,menu);
+                System.out.println(printOption);
 
             } if (input.equalsIgnoreCase("2")){
                 orderList.printOrderList();
@@ -58,6 +62,7 @@ public class PizzaMain {
             }
 
         }
+            UI.drawOrderlistAndMenu(orderList, menu);
 
     }
 
