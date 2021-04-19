@@ -14,13 +14,6 @@ public class OrderList {
 
     private final Map<String, Order> orders = new HashMap<>();
 
-    private File selectFile(){
-        String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
-        Path file = Paths.get(myDocuments, dataDirectory, todaysFile);
-
-        return file.toFile();
-    }
-
     public void addOrder(Order o) {
         File dailyLog = selectFile();
 
@@ -35,9 +28,47 @@ public class OrderList {
         return this.orders.values();
     }
 
+    public void changeOrderStatus(String orderNR, Boolean paid) {
+        var o = orders.get(orderNR);
+
+
+        removeOrder(orderNR);
+
+        o.setHasBeenPaidFor(paid);
+
+        addOrder(o);
+    }
+
     /* mkdir() is part of File class, which creates a directory denoted by an abstract file name (returns true if directory was created)
      The java.io.File.getParentFile() method returns the abstract pathname of this abstract pathname's parent, or null if this pathname does not name a parent directory.
      */
+
+    public void removeOrder(String id) {
+        removeOrderFromFile(orders.get(id));
+        orders.remove(id);
+    }
+
+    public Map<String, Order> getOrderList() {
+        return orders;
+    }
+
+    public void showDailyReport() {
+        DailyReport report = new DailyReport();
+        var formattedDate = new SimpleDateFormat("d.M.yyyy").format(new Date());
+        report.printDailyReport(selectFile(), formattedDate);
+    }
+
+    private File selectFile(){
+        String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
+        Path file = Paths.get(myDocuments, dataDirectory, todaysFile);
+
+        return file.toFile();
+    }
+
+    private String getCurrentSimpleDate() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+        return timeStamp;
+    }
 
     private void ensureThatFileExists(File dailyLog) {
         try {
@@ -62,22 +93,6 @@ public class OrderList {
         }
     }
 
-    public void changeOrderStatus(String orderNR, Boolean paid) {
-        var o = orders.get(orderNR);
-
-
-        removeOrder(orderNR);
-
-        o.setHasBeenPaidFor(paid);
-
-        addOrder(o);
-    }
-
-    public void removeOrder(String id) {
-        removeOrderFromFile(orders.get(id));
-        orders.remove(id);
-    }
-
     /* https://stackoverflow.com/a/45784174
     * This method reads all lines in the file, stashes the ones that DON'T contain the orderId (hexadecimal),
     * and then writes those into the file
@@ -95,20 +110,4 @@ public class OrderList {
             e.printStackTrace();
         }
     }
-
-    private String getCurrentSimpleDate() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-        return timeStamp;
-    }
-
-    public Map<String, Order> getOrderList() {
-        return orders;
-    }
-
-    public void showDailyReport() {
-        DailyReport report = new DailyReport();
-        var formattedDate = new SimpleDateFormat("d.M.yyyy").format(new Date());
-        report.printDailyReport(selectFile(), formattedDate);
-    }
-
 }
