@@ -1,23 +1,19 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class FakeMainForTest {
-    static Menu m;
+    static Menu menu;
 
     static {
         try {
-            m = new Menu();
+            menu = new Menu();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    static Map<Integer, Pizza> menu = m.getPizzaMenu();
-
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) {
         System.out.println(new File(".").getAbsolutePath());
 
         ArrayList<OrderLineItem> lineItemList = new ArrayList<>(); // used by all objects, just clear every time
@@ -48,10 +44,9 @@ public class FakeMainForTest {
         orders.printOrderList();
 
         //MARK ADDED THIS SHIT vvv
-        Menu pizzas = new Menu();
         UI.drawHeader();
         UI.drawOrderlist(orders);
-        UI.drawMenu(pizzas);
+        UI.drawMenu(menu);
 
 
         orders.removeOrder(fakeOrder3);
@@ -60,7 +55,7 @@ public class FakeMainForTest {
     }
 
     private static Pizza makeFakePizza(Integer id) {
-        return menu.get(id);
+        return menu.getPizza(id);
     }
 
     private static OrderLineItem makeFakeLine(Pizza pizza, Integer amount, String comment) {
