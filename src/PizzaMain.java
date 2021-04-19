@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class PizzaMain {
@@ -24,24 +25,55 @@ public class PizzaMain {
 
         // Add loop to keep adding pizzas
 
-        Order order1 = new Order();
-        Order order2 = new Order();
-
-        order1.addPizza();
-        order1.pickUpTime();
-        Invoice.printInvoice(order1);
-
-        order2.addPizza();
-        order2.pickUpTime();
-        Invoice.printInvoice(order2);
-
+        var programIsRunning = true;
         OrderList orderList = new OrderList();
-        orderList.addOrder(order1);
-        orderList.addOrder(order2);
+        Scanner sc = new Scanner(System.in);
 
-        System.out.println(orderList);
+        System.out.println("""
+                Press 1: to add pizza
+                Press 2: to remove a pizza from the order list
+                Press 9: to quit""");
 
-        
+        while(programIsRunning) {
+        var input = sc.nextLine();
+            if (input.toLowerCase().startsWith("1")) {
+                Order order = new Order();
+
+                order.addPizza();
+                order.pickUpTime();
+                Invoice.printInvoice(order);
+
+                orderList.addOrder(order);
+
+            } if (input.equalsIgnoreCase("2")){
+                orderList.printOrderList();
+                Order order = new Order();
+                var removeInput = sc.nextInt();
+                orderList.removeOrder(order);
+                orderList.printOrderList();
+
+            } if (input.toLowerCase().startsWith("9")) {
+                System.out.println("Terminating");
+                programIsRunning = false;
+            }
+
+        }
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
