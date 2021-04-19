@@ -7,13 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/*todo:
-   - When order is paid, change isPaid flag to true.
-   If order flag is false when Mario prints daily revenue report, ignore that order
-   - Make DailyReport class
- */
-
-
 public class OrderList {
    //Getting environment variable for user profile, this is pre/defined by Windows
     private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
@@ -51,9 +44,6 @@ public class OrderList {
             if(!dailyLog.exists()) {
                 dailyLog.getParentFile().mkdirs();
                 dailyLog.createNewFile();
-                System.out.println("created log file for day: " + dailyLog.getName());
-            } else {
-                System.out.println("file exists for day: " + dailyLog.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,9 +65,9 @@ public class OrderList {
     public void changeOrderStatus(String orderNR, Boolean paid) {
         var o = orders.get(orderNR);
 
-        // remove order from order arrayList and file
+
         removeOrder(orderNR);
-        // add order back
+
         o.setHasBeenPaidFor(paid);
 
         addOrder(o);
@@ -85,7 +75,7 @@ public class OrderList {
 
     public void removeOrder(String id) {
         removeOrderFromFile(orders.get(id));
-        //orders.remove(id);
+        orders.remove(id);
     }
 
     /* https://stackoverflow.com/a/45784174
@@ -95,7 +85,6 @@ public class OrderList {
     private void removeOrderFromFile(Order o)  {
         File dailyLog = selectFile();
         var id = o.getId();
-       // System.out.println("Removing order with id: " + id);
         List<String> out = null;
         try {
             out = Files.lines(dailyLog.toPath())
