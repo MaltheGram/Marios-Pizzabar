@@ -107,7 +107,7 @@ public class UI {
     //creates OrderList String and returns it
     public static String makeOrderList(OrderList orders) {
         String orderEntries = "";
-        for (Order o : orders.getOrderList()) {
+        for (Order o : orders.getOrderList().values()) {
             String orderEntry = "[Ordre #" + o.getId() +" | Pickup Time: " + o.getPickUpTime() + "]";
 
             orderEntry = centerString(orderEntry,maxOrderListEntryLength,hFill);
