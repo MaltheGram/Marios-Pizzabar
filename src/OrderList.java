@@ -19,7 +19,7 @@ public class OrderList {
     private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
     private final String dataDirectory = "Mario-s-Pizza-data";
 
-    private static Map<String, Order> orders = new HashMap<>();
+    private final Map<String, Order> orders = new HashMap<>();
 
     private File selectFile(){
         String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
@@ -37,6 +37,11 @@ public class OrderList {
 
         writeOrderToFile(o, dailyLog);
     }
+
+    public Collection<Order> getOrders() {
+        return this.orders.values();
+    }
+
     /* mkdir() is part of File class, which creates a directory denoted by an abstract file name (returns true if directory was created)
      The java.io.File.getParentFile() method returns the abstract pathname of this abstract pathname's parent, or null if this pathname does not name a parent directory.
      */
@@ -73,7 +78,7 @@ public class OrderList {
         // remove order from order arrayList and file
         removeOrder(orderNR);
         // add order back
-        o.setIsPaid(paid);
+        o.setHasBeenPaidFor(paid);
 
         addOrder(o);
     }
