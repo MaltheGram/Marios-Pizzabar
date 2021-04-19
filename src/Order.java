@@ -28,9 +28,6 @@ public class Order implements Serializable {
 
     private double totalPrice;
     private String id = new OrderID().getHexStringID();
-    public String getOrderTime() {
-        return orderTime;
-    }
     private String orderTime = getCurrentSimpleTime();
     private Integer pickUpTime;
     private final Scanner sc = new Scanner(System.in);
@@ -40,8 +37,12 @@ public class Order implements Serializable {
     public void pickUpTime() {
         System.out.println("Please add pickup time");
         pickUpTime = sc.nextInt();
-        // Make if pickUpTime > closing time = error. Do we know closing time?
+        // TODO: Make if pickUpTime > closing time = error. Do we know closing time?
         System.out.println("Pickup at: " + pickUpTime);
+    }
+
+    public String getOrderTime() {
+        return orderTime;
     }
 
     private String getCurrentSimpleTime() {
@@ -62,6 +63,7 @@ public class Order implements Serializable {
     }
 
     public double getTotalPrice() {
+        double totalPrice = 0;
         for (OrderLineItem lineItem : listOfOrderLineItems) {
             totalPrice += lineItem.getPrice() + getPriceOfExtras(lineItem);
         }
