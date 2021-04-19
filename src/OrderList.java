@@ -4,9 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*todo:
@@ -21,7 +19,7 @@ public class OrderList {
     private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
     private final String dataDirectory = "Mario-s-Pizza-data";
 
-    private static List<Order> orders = new ArrayList<>();
+    private static Map<String, Order> orders = new HashMap<>();
 
     private File selectFile(){
         String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
@@ -35,7 +33,7 @@ public class OrderList {
 
         ensureThatFileExists(dailyLog);
 
-        orders.add(o);
+        orders.put(o.getId(), o);
 
         writeOrderToFile(o, dailyLog);
     }
@@ -72,17 +70,18 @@ public class OrderList {
     public void changeOrderStatus(Order o, Boolean paid) {
 
         // remove order from order arrayList and file
-        removeOrder(o);
+        removeOrder(o.getId());
         // add order back
         o.setIsPaid(paid);
 
         addOrder(o);
     }
 
-    public void removeOrder(Order o) {
-        orders.remove(o);
+    public void removeOrder(String id) {
+        removeOrderFromFile(orders.get(id));
+        orders.remove(id);
 
-        removeOrderFromFile(o);
+
     }
 
     /* https://stackoverflow.com/a/45784174
@@ -91,12 +90,12 @@ public class OrderList {
     * Collectors class implement various reduction operations, such as accumulating elements into collections, summarizing elements according to various criteria, etc.*/
     private void removeOrderFromFile(Order o)  {
         File dailyLog = selectFile();
-        var hexOrderId = Long.toHexString(o.getId());
-        System.out.println("Removing order with id: " + hexOrderId);
+        var id = o.getId();
+        System.out.println("Removing order with id: " + id);
         List<String> out = null;
         try {
             out = Files.lines(dailyLog.toPath())
-                    .filter(line -> !line.contains(hexOrderId))
+                    .filter(line -> !line.contains(id))
                     .collect(Collectors.toList());
             Files.write(dailyLog.toPath(), out, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
@@ -109,20 +108,15 @@ public class OrderList {
         return timeStamp.substring(0, 8);
     }
 
-    public List<Order> getOrderList() {
+    public Map<String, Order> getOrderList() {
         return orders;
     }
 
     public void printOrderList() {
-
-        for(int i = 0; i < getOrderList().size(); i++) {
-            System.out.println(getOrderList().get(i));
+        System.out.println("printing order list:\n");
+        for(var o : orders.values()) {
+            System.out.println(getOrderList().values());
         }
     }
 
- /*   public String toString() {
-        // all information of isPaid true orders, incl. orderID
-        var humanReadableFileContent = new StringFormatHandler().humanReadableFileText(this, getCurrentSimpleDate());
-        return null;
-    }*/
 }
