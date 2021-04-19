@@ -2,6 +2,8 @@ import java.io.Console;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class UI {
     //UI SETTINGS
@@ -34,28 +36,38 @@ public class UI {
 
     //check string stream for max length of string
     private static int getMaxLengthStringList(String[] list) {
+        return Arrays.stream(list).map(String::length).reduce(0, Integer::max);
+        /*
         int len = 0;
         for (String str : list) {
             len = Math.max(str.length(), len);
         }
         return len;
+         */
     }
 
     //add padding to string
     private static String padString(String str, int len, String ch) {
+        return str + ch.repeat( len - str.length() );
+        /*
+        str + ch.repeat(len)
         for (int i=str.length();i<len;i++) {
             str += ch;
         }
         return str;
+         */
     }
 
     //to create horizontal lines, example: border
     private static String fill(String border, int len) {
+        return border.repeat(len);
+        /*
         String frame = "";
         for (int i = 0; i < len; i++) {
             frame += border;
         }
         return frame;
+         */
     }
 
     private static String centerString(String header,int len,String filler) {
