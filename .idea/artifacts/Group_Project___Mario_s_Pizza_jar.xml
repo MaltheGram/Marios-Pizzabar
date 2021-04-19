@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Group-Project---Mario-s-Pizza:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Group_Project___Mario_s_Pizza_jar</output-path>
+    <root id="archive" name="Group-Project---Mario-s-Pizza.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/resources/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Group-Project---Mario-s-Pizza" />
+    </root>
+  </artifact>
+</component>
