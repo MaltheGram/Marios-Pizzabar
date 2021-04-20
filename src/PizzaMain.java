@@ -43,7 +43,9 @@ public class PizzaMain {
                 makeNewOrder(order);
                 setPickUpTime(order);
 
-                orderList.addOrder(order);
+                if (order.getTotalPrice() > 0) {
+                    orderList.addOrder(order);
+                }
             } else if ( input.equalsIgnoreCase("2")) {
                 markOrderAsPaid();
             } else if ( input.equalsIgnoreCase("3")) {
