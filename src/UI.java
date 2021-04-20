@@ -7,8 +7,7 @@ public class UI {
     private static final String edge = "\u2548";
     private static final String hFill = "\u2501";
     private static final String vFill = "\u2502";
-    private static final String hPadding = " ";
-    private static final int hPadLength = 2;
+    private static final String hPadding = "  ";
 
     //BOX BODY SETTINGS
     private static final int maxMenuEntryLength = 90; // scale entry list to # characters
@@ -44,7 +43,7 @@ public class UI {
     }
     //centers string with a given column width
     private static String centerString(String header,int len,String filler) {
-        return fill(filler,len/2 - header.length()/2) + header;
+        return fill(filler,(len - header.length())/2) + header;
     }
 
     //convert double to string and remove extra zero's
@@ -59,22 +58,22 @@ public class UI {
     private static String addBorder(String description,String header,String hPadding) {
         //split String in String[]
         String borderedString = "";
-        String[] pizzaList = description.split("\n");
-        int maxBorderWidth = getMaxLengthStringList(pizzaList);
+        String[] infoList = description.split("\n");
+        int maxBorderWidth = getMaxLengthStringList(infoList);
 
         //draw top border with header
-        String line = edge + fill(hFill, maxBorderWidth + hPadLength) + edge + "\n";
+        String line = edge + fill(hFill, maxBorderWidth + 2*hPadding.length()) + edge + "\n";
 
         borderedString += line;
 
-        String headerCentered = centerString(header,maxBorderWidth,hPadding);
-        borderedString += vFill + hPadding + padString(headerCentered, maxBorderWidth, hPadding) + hPadding + vFill + "\n";
+        String headerCentered = centerString(header,maxBorderWidth+ 2*hPadding.length()," ");
+        borderedString += vFill + padString(headerCentered, maxBorderWidth+ 2*hPadding.length(), " ") + vFill + "\n";
 
         borderedString += line;
 
         //draw box description
-        for (String str : pizzaList) {
-            borderedString += vFill + hPadding + padString(str, maxBorderWidth, hPadding) + hPadding + vFill + "\n";
+        for (String str : infoList) {
+            borderedString += vFill + hPadding + padString(str, maxBorderWidth, " ") + hPadding + vFill + "\n";
         }
 
         //draw lower border
@@ -86,7 +85,7 @@ public class UI {
     //draws the header for the program
     public static void drawHeader() {
         String[] headerList = pageHeader.split("\n");
-        int headerLength = maxMenuEntryLength + maxOrderListEntryLength;
+        int headerLength = maxMenuEntryLength + maxOrderListEntryLength+columnPadding+4*hPadding.length()+columnPadding;
 
         for (String str : headerList) {
             String headerCentered = centerString(str,headerLength,hPaddingHeader);
@@ -97,6 +96,14 @@ public class UI {
     //creates OrderList String and returns it
     public static String makeOrderList(Collection<Order> orders) {
         String orderEntries = "";
+
+        //in case of Orders = empty
+        if (orders.isEmpty()) {
+            orderEntries += fill(" ",maxOrderListEntryLength);
+            return addBorder(orderEntries,"Aktive Ordre (" + orders.size() + ")",hPadding);
+        }
+
+        //creating orders
         for (Order o : orders) {
             //create Order headline
             String orderEntry = "[Ordre #" + o.getId() +" | Leverings tid: " + o.getPickUpTime() + "]";
@@ -137,8 +144,8 @@ public class UI {
         for (Pizza p : menu) {
             String currentPizzaEntry = p.getId() +". " + p.getName() + " : "+p.getDescription();
 
-            String pizzaPrice = Math.round(p.getPrice()) + ",-";
-            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength - pizzaPrice.length(),".") + "\n";
+            String pizzaPrice = Math.round(p.getPrice()) + ",-\n";
+            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength - pizzaPrice.length(),".");
 
             pizzaEntries += pizzaPrice;
         }
@@ -167,7 +174,7 @@ public class UI {
             if (i<ordersStringArray.length) {
                 combined += ordersStringArray[i];
             } else {
-                combined += fill(" ",maxOrderListEntryLength+hPadLength*2);
+                combined += fill(" ",maxOrderListEntryLength+2*hPadding.length()+2*vFill.length());
             }
             combined += fill(" ",columnPadding);
 
