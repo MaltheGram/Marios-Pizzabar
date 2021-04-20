@@ -24,8 +24,12 @@ public class OrderList {
         writeOrderToFile(o, dailyLog);
     }
 
-    public List<Order> getOrders() {
-        return this.orders.values().stream().sorted().toList();
+    public List<Order> getAllOrders() {
+        return this.orders.values().stream().sorted().collect(Collectors.toList());
+    }
+
+    public List<Order> getActiveOrders() {
+        return this.orders.values().stream().filter( e -> !e.getHasBeenPaidFor() ).sorted().collect(Collectors.toList());
     }
 
     public void changeOrderStatus(String orderNR, Boolean paid) {

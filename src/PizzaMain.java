@@ -31,7 +31,7 @@ public class PizzaMain {
         while (shouldContinueRunning) {
             UI.clear();
             UI.drawHeader();
-            UI.drawOrderlistAndMenu(orderList.getOrders(), menu.getAllPizzas());
+            UI.drawOrderlistAndMenu(orderList.getActiveOrders(), menu.getAllPizzas());
             System.out.println(UIOptions);
 
             String input = sc.nextLine();
@@ -99,7 +99,8 @@ public class PizzaMain {
     }
 
     public static void removeOrder() {
-         String userInputIdToRemove = sc.nextLine();
-         orderList.removeOrder(userInputIdToRemove);
+         System.out.print("Indtast bestillings nr: ");
+         String userInputOrderId = sc.nextLine();
+         orderList.removeOrder(userInputOrderId);
     }
 }

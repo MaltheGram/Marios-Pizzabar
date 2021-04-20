@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.*;
 import java.io.Serializable;
 
 public class Order implements Serializable, Comparable {
@@ -66,6 +67,17 @@ public class Order implements Serializable, Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return this.getPickUpTime().compareTo(((Order) o).getPickUpTime() );
+        Order otherObject = (Order) o;
+        if (this.getHasBeenPaidFor() && otherObject.getHasBeenPaidFor()) {
+            return this.getPickUpTime().compareTo(((Order) o).getPickUpTime() );
+        } else if (this.getHasBeenPaidFor() && !otherObject.getHasBeenPaidFor() ) {
+            return 1;
+        } else if (!this.getHasBeenPaidFor() && otherObject.getHasBeenPaidFor()) {
+            return -1;
+        } else if (!this.getHasBeenPaidFor() && !otherObject.getHasBeenPaidFor()) {
+            return this.getPickUpTime().compareTo(((Order) o).getPickUpTime() );
+        } else {
+            return 0;
+        }
     }
 }
