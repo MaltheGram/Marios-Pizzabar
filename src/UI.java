@@ -28,9 +28,6 @@ public class UI {
     private static final String vFillHeader = ":";
     private static final String hPaddingHeader = ".";
 
-    public static void main(String[] args) {
-    }
-
     //check string stream for max length of string
     private static int getMaxLengthStringList(String[] list) {
         return Arrays.stream(list).map(String::length).reduce(0, Integer::max);
@@ -52,8 +49,8 @@ public class UI {
 
     //convert double to string and remove extra zero's
     public static String numberShorten(double d) {
-        if(d == (long) d)
-            return String.format("%d",(long) d);
+        if(d == (int) d)
+            return String.format("%d",(int) d);
         else
             return String.format("%s",d);
     }
@@ -67,24 +64,22 @@ public class UI {
 
         //draw top border with header
         String line = edge + fill(hFill, maxBorderWidth + hPadLength) + edge + "\n";
-        borderedString += line;
-        //System.out.println(line);
-        String headerCentered = centerString(header,maxBorderWidth,hPadding);
 
-        borderedString += vFill + hPadding + padString(headerCentered, maxBorderWidth, hPadding) + hPadding + vFill + "\n";
-        //System.out.printf(vFill + hPadding + "%s" + hPadding + vFill + "\n", padString(headerCentered, maxBorderWidth, hPadding));
         borderedString += line;
-        //System.out.println(line);
+
+        String headerCentered = centerString(header,maxBorderWidth,hPadding);
+        borderedString += vFill + hPadding + padString(headerCentered, maxBorderWidth, hPadding) + hPadding + vFill + "\n";
+
+        borderedString += line;
 
         //draw box description
         for (String str : pizzaList) {
-            //System.out.printf(vFill + hPadding + "%s" + hPadding + vFill + "\n", padString(str, maxBorderWidth, hPadding));
             borderedString += vFill + hPadding + padString(str, maxBorderWidth, hPadding) + hPadding + vFill + "\n";
         }
 
         //draw lower border
         borderedString += line;
-        //System.out.println(line);
+
         return borderedString;
     }
 
@@ -97,19 +92,20 @@ public class UI {
             String headerCentered = centerString(str,headerLength,hPaddingHeader);
             System.out.printf(vFillHeader + "%s" + vFillHeader + "\n", padString(headerCentered, headerLength, hPaddingHeader));
         }
-
     }
 
     //creates OrderList String and returns it
     public static String makeOrderList(Collection<Order> orders) {
         String orderEntries = "";
         for (Order o : orders) {
-            String orderEntry = "[Ordre #" + o.getId() +" | Pickup Time: " + o.getPickUpTime() + "]";
+            //create Order headline
+            String orderEntry = "[Ordre #" + o.getId() +" | Leverings tid: " + o.getPickUpTime() + "]";
 
             orderEntry = centerString(orderEntry,maxOrderListEntryLength,hFill);
 
             orderEntry = padString(orderEntry,maxOrderListEntryLength,hFill) + "\n";
 
+            //create Order Strings
             for (OrderLineItem l : o.getLineItems()) {
                 orderEntry += "x"+l.getAmount() + " #"+l.getPizza().getId()+ " " + l.getPizza().getName();
 
@@ -118,10 +114,11 @@ public class UI {
                 orderEntry += "\n";
             }
 
+            //create Order total
             orderEntries += orderEntry;
             String pricePoint = String.valueOf(numberShorten(o.getTotalPrice()));
 
-            String orderTotal = "Total: " + pricePoint + ",- DKK";
+            String orderTotal = "Total: " + pricePoint + "kr.";
 
             orderTotal = padString(orderTotal,maxOrderListEntryLength," ");
 
@@ -129,7 +126,7 @@ public class UI {
         }
 
         //add border
-        return addBorder(orderEntries,"Active Orders",hPadding);
+        return addBorder(orderEntries,"Aktive Ordre (" + orders.size() + ")",hPadding);
     }
 
     //creates Menu as a String and returns it
@@ -138,18 +135,16 @@ public class UI {
 
         //Create massive pizza menu string
         for (Pizza p : menu) {
-
             String currentPizzaEntry = p.getId() +". " + p.getName() + " : "+p.getDescription();
 
-            String pizzaPrice = Math.round(p.getPrice()) + ",-\n";
-            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength - pizzaPrice.length()+1,".");
+            String pizzaPrice = Math.round(p.getPrice()) + ",-";
+            pizzaEntries += padString(currentPizzaEntry,maxMenuEntryLength - pizzaPrice.length(),".") + "\n";
 
             pizzaEntries += pizzaPrice;
-
         }
 
         //add border
-        return addBorder(pizzaEntries,"Menu",hPadding);
+        return addBorder(pizzaEntries,"Pizza Menu",hPadding);
     }
 
     public static void drawOrderList(Collection<Order> orders) {
@@ -167,6 +162,7 @@ public class UI {
 
         String combined = "";
 
+        //Add OrderList and Menu to one single string
         for (int i=0;i<maxLines;i++) {
             if (i<ordersStringArray.length) {
                 combined += ordersStringArray[i];
@@ -178,7 +174,7 @@ public class UI {
             if (i<menuStringArray.length) {
                 combined += menuStringArray[i];
             } else {
-                //combined += fill(" ",maxMenuEntryLength);
+                combined += fill(" ",maxMenuEntryLength);
             }
             combined += "\n";
 
