@@ -34,13 +34,9 @@ public class OrderList {
 
     public void changeOrderStatus(String orderNR, Boolean paid) {
         var o = orders.get(orderNR);
-
-
         removeOrder(orderNR);
-
         o.setHasBeenPaidFor(paid);
-
-        addOrder(o);
+        writeOrderToFile(o, selectFile());
     }
 
     /* mkdir() is part of File class, which creates a directory denoted by an abstract file name (returns true if directory was created)

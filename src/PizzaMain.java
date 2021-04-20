@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class PizzaMain {
     private static Boolean shouldContinueRunning = true;
     private static final Scanner sc = new Scanner(System.in);
+    private static final DailyReport report = new DailyReport();
 
     private static final String UIOptions =
                 """
@@ -31,7 +32,7 @@ public class PizzaMain {
         while (shouldContinueRunning) {
             UI.clear();
             UI.drawHeader();
-            UI.drawOrderlistAndMenu(orderList.getActiveOrders(), menu.getAllPizzas());
+            UI.drawOrderlistAndMenu(orderList.getAllOrders(), menu.getAllPizzas());
             System.out.println(UIOptions);
 
             String input = sc.nextLine();
@@ -44,11 +45,11 @@ public class PizzaMain {
 
                 orderList.addOrder(order);
             } else if ( input.equalsIgnoreCase("2")) {
-                    markOrderAsPaid();
+                markOrderAsPaid();
             } else if ( input.equalsIgnoreCase("3")) {
-                    removeOrder();
+                removeOrder();
             } else if ( input.equalsIgnoreCase("4")) {
-                //TODO: Print daily report
+                printDailyReport();
             } else if ( input.equalsIgnoreCase("9")) {
                 System.out.println("Lukker...");
                 // TODO: PRINT DAILY REPORT
@@ -84,6 +85,13 @@ public class PizzaMain {
 
             order.addLineItem( new OrderLineItem(pizza, quantity, comment) );
         }
+    }
+
+    public static void printDailyReport() {
+         UI.clear();
+         orderList.showDailyReport();
+         System.out.println("Tast enter for at lukke");
+         sc.nextLine();
     }
 
     public static void setPickUpTime(Order order) {
