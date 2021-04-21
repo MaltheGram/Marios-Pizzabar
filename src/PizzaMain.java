@@ -74,7 +74,7 @@ public class PizzaMain {
                 break;
             }
 
-            System.out.println("Kommentar: ");
+            System.out.print("Kommentar: ");
             String userInputComment = sc.nextLine();
             if (UserInput.isQuit(userInputComment)) {
                 break;
@@ -104,12 +104,21 @@ public class PizzaMain {
     public static void markOrderAsPaid() {
          System.out.print("Indtast bestillings nr: ");
          String userInputOrderID = sc.nextLine();
-         orderList.changeOrderStatus(userInputOrderID, true);
+         try {
+             orderList.changeOrderStatus(userInputOrderID, true);
+         } catch(Exception e) {
+            System.out.println("Bestilling ikke fundet");
+         }
+
     }
 
     public static void removeOrder() {
          System.out.print("Indtast bestillings nr: ");
          String userInputOrderId = sc.nextLine();
-         orderList.removeOrder(userInputOrderId);
+         try {
+             orderList.removeOrder(userInputOrderId);
+         } catch(Exception e) {
+             System.out.println("Bestilling ikke fundet");
+         }
     }
 }

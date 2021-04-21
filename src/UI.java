@@ -25,7 +25,7 @@ public class UI {
            ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚══════╝    ╚═╝     ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝
             """; // scale entry list to # characters
     private static final String vFillHeader = ":";
-    private static final String hPaddingHeader = ".";
+    private static final String hPaddingHeader = " ";
 
     //check string stream for max length of string
     private static int getMaxLengthStringList(String[] list) {
