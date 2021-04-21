@@ -1,10 +1,11 @@
 import java.io.FileNotFoundException;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class PizzaMain {
     private static Boolean shouldContinueRunning = true;
-    private static Boolean firstRun = true;
     private static final Scanner sc = new Scanner(System.in);
+    private static final DailyReport report = new DailyReport();
 
     private static final String UIOptions =
                 """
@@ -29,18 +30,10 @@ public class PizzaMain {
     public static void main(String[] args) {
 
         while (shouldContinueRunning) {
-            if (firstRun) {
-                firstRun = false;
-                UI.clear();
-                UI.drawHeader();
-                UI.drawMenu(menu.getAllPizzas());
-                System.out.println(UIOptions);
-            } else {
-                UI.clear();
-                UI.drawHeader();
-                UI.drawOrderlistAndMenu(orderList.getOrders(), menu.getAllPizzas());
-                System.out.println(UIOptions);
-            }
+            UI.clear();
+            UI.drawHeader();
+            UI.drawOrderlistAndMenu(orderList.getAllOrders(), menu.getAllPizzas());
+            System.out.println(UIOptions);
 
             String input = sc.nextLine();
 
@@ -48,15 +41,17 @@ public class PizzaMain {
                 Order order = new Order();
 
                 makeNewOrder(order);
-                setPickUpTime(order);
 
-                orderList.addOrder(order);
+                if (order.getTotalPrice() > 0) {
+                    setPickUpTime(order);
+                    orderList.addOrder(order);
+                }
             } else if ( input.equalsIgnoreCase("2")) {
-                    markOrderAsPaid();
+                markOrderAsPaid();
             } else if ( input.equalsIgnoreCase("3")) {
-                    removeOrder();
+                removeOrder();
             } else if ( input.equalsIgnoreCase("4")) {
-                    //TODO: Print daily report
+                printDailyReport();
             } else if ( input.equalsIgnoreCase("9")) {
                 System.out.println("Lukker...");
                 // TODO: PRINT DAILY REPORT
@@ -70,19 +65,19 @@ public class PizzaMain {
          while (true) {
             System.out.print("Pizza nr: ");
             String userInputPizzaId = sc.nextLine();
-            if (isQuit(userInputPizzaId)) {
+            if (UserInput.isQuit(userInputPizzaId)) {
                 break;
             }
 
             System.out.print("Antal: ");
             String userInputPizzaAmount = sc.nextLine();
-            if (isQuit(userInputPizzaAmount)) {
+            if (UserInput.isQuit(userInputPizzaAmount)) {
                 break;
             }
 
             System.out.println("Kommentar: ");
             String userInputComment = sc.nextLine();
-            if (isQuit(userInputComment)) {
+            if (UserInput.isQuit(userInputComment)) {
                 break;
             }
 
@@ -94,9 +89,16 @@ public class PizzaMain {
         }
     }
 
+    public static void printDailyReport() {
+         UI.clear();
+         orderList.showDailyReport();
+         System.out.println("Tast enter for at lukke");
+         sc.nextLine();
+    }
+
     public static void setPickUpTime(Order order) {
          System.out.print("Tidspunkt for afhenting: ");
-         Integer pickUpTime = sc.nextInt();
+         LocalTime pickUpTime = UserInput.parseLocalTime( sc.nextLine() );
          order.setPickUpTime( pickUpTime );
     }
 
@@ -107,17 +109,8 @@ public class PizzaMain {
     }
 
     public static void removeOrder() {
-         String userInputIdToRemove = sc.nextLine();
-         orderList.removeOrder(userInputIdToRemove);
-    }
-    private static boolean isQuit(String str) {
-        return (str.equalsIgnoreCase("quit") ||
-                str.equalsIgnoreCase("afslut") ||
-                str.equalsIgnoreCase("luk") ||
-                str.equalsIgnoreCase("stop") ||
-                str.equalsIgnoreCase("exit") ||
-                str.equalsIgnoreCase("end") ||
-                str.equalsIgnoreCase("q")
-        );
+         System.out.print("Indtast bestillings nr: ");
+         String userInputOrderId = sc.nextLine();
+         orderList.removeOrder(userInputOrderId);
     }
 }

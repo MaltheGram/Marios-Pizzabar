@@ -38,10 +38,10 @@ public class Menu {
 		while (menuScanner.hasNextLine()) {
 			String[] menuLine  = menuScanner.nextLine().split("\t");
 			
-			Integer id = parseInteger(menuLine[0]);
-			String name = parseString(menuLine[1]);
-			String description = parseString(menuLine[2]);
-			Double price = parseDouble(menuLine[3]);
+			Integer id = UserInput.parseInteger(menuLine[0]);
+			String name = UserInput.parseString(menuLine[1]);
+			String description = UserInput.parseString(menuLine[2]);
+			Double price = UserInput.parseDouble(menuLine[3]);
 			
 			
 			Pizza pizza = new Pizza( id, name, description, price);
@@ -51,17 +51,5 @@ public class Menu {
 		menuScanner.close();
 		
 		return pizzas;
-	}
-	
-	private static String parseString(String str) {
-		return str.strip();
-	}
-	
-	private static Double parseDouble(String str) {
-		return Double.parseDouble(str.strip());
-	}
-	
-	private static Integer parseInteger(String str) {
-		return Integer.parseInt(str.strip());
 	}
 }

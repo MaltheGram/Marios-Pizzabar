@@ -1,12 +1,14 @@
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.*;
 import java.io.Serializable;
 
-public class Order implements Serializable {
+public class Order implements Serializable, Comparable {
     private String id = new OrderID().getHexStringID();
     private String orderTime = getCurrentSimpleTime();
     private final Collection<OrderLineItem> lineItems = new ArrayList<>();
-    private Integer pickUpTime = 0;
+    private LocalTime pickUpTime = null;
     private Boolean hasBeenPaidFor = false;
 
     public String getOrderTime() {
@@ -45,10 +47,10 @@ public class Order implements Serializable {
         this.hasBeenPaidFor = hasBeenPaidFor;
     }
 
-    public Integer getPickUpTime(){
+    public LocalTime getPickUpTime(){
         return pickUpTime;
     }
-    public void setPickUpTime(Integer pickUpTime) {
+    public void setPickUpTime(LocalTime pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
 
@@ -61,5 +63,21 @@ public class Order implements Serializable {
 
         orderString.append( getTotalPrice()).append(" DKK");
         return orderString.toString();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Order otherObject = (Order) o;
+        if (this.getHasBeenPaidFor() && otherObject.getHasBeenPaidFor()) {
+            return this.getPickUpTime().compareTo(((Order) o).getPickUpTime() );
+        } else if (this.getHasBeenPaidFor() && !otherObject.getHasBeenPaidFor() ) {
+            return 1;
+        } else if (!this.getHasBeenPaidFor() && otherObject.getHasBeenPaidFor()) {
+            return -1;
+        } else if (!this.getHasBeenPaidFor() && !otherObject.getHasBeenPaidFor()) {
+            return this.getPickUpTime().compareTo(((Order) o).getPickUpTime() );
+        } else {
+            return 0;
+        }
     }
 }
