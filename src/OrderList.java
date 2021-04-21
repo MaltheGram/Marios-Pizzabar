@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class OrderList {
    /*Getting environment variable for user profile, this is pre-defined by Windows*
    Program tries to fin Documents folder, but if it doesn't, folder is made elsewhere*/
-
     private final String myDocuments = System.getenv("USERPROFILE") + "\\Documents\\";
     private final String dataDirectory = "Mario-s-Pizza-data";
 
@@ -26,45 +25,11 @@ public class OrderList {
         writeOrderToFile(o, dailyLog);
     }
 
-    public Collection<Order> getAllOrders() {
-        return this.orders.values();
-    }
-
-    public void changeOrderStatus(String orderNR, Boolean paid) {
-        var o = orders.get(orderNR);
-
-        removeOrder(orderNR);
-
-        o.setHasBeenPaidFor(paid);
-
-        writeOrderToFile(o, selectFile());
-    }
-
-    public void removeOrder(String id) {
-        removeOrderFromFile(orders.get(id));
-        orders.remove(id);
-    }
-
-    public Map<String, Order> getOrderList() { // incorrectly named, should be Map, not List
-        return orders;
-    }
-
-    public void showDailyReport() {
-        DailyReport report = new DailyReport();
-        var formattedDate = new SimpleDateFormat("d.M.yyyy").format(new Date());
-        report.printDailyReport(selectFile(), formattedDate);
-
-    }
-
     private File selectFile(){
         String todaysFile = "log_of_daily_orders" + "_" + getCurrentSimpleDate() + ".txt";
         Path file = Paths.get(myDocuments, dataDirectory, todaysFile);
 
         return file.toFile();
-    }
-
-    private String getCurrentSimpleDate() {
-        return new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
     }
 
     private void ensureThatFileExists(File dailyLog) {
@@ -83,11 +48,40 @@ public class OrderList {
     private void writeOrderToFile(Order o, File dailyLog) {
         try {
             var stringToAppend = new StringFormatHandler().formatLineForOrderList(o);
-
             Files.write(dailyLog.toPath(), stringToAppend.getBytes(), StandardOpenOption.APPEND);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getCurrentSimpleDate() {
+        return new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+    }
+
+    public Collection<Order> getAllOpenOrders() {
+        return this.orders.values();
+    }
+
+    public void changeOrderStatus(String orderNR, Boolean paid) {
+        var o = orders.get(orderNR);
+
+        removeOrder(orderNR);
+
+        o.setHasBeenPaidFor(paid);
+
+        writeOrderToFile(o, selectFile());
+    }
+
+    public void removeOrder(String id) {
+        removeOrderFromFile(orders.get(id));
+        orders.remove(id);
+    }
+
+    public void showDailyReport() {
+        DailyReport report = new DailyReport();
+        var formattedDate = new SimpleDateFormat("d.M.yyyy").format(new Date());
+        report.printDailyReport(selectFile(), formattedDate);
     }
 
     /* https://stackoverflow.com/a/45784174
@@ -96,7 +90,6 @@ public class OrderList {
     * Collectors class implement various reduction operations, such as accumulating elements into collections, summarizing elements according to various criteria, etc.*/
     private void removeOrderFromFile(Order o)  {
 
-        // check for that order exists
         if(o.equals(null)) {
             System.out.println("ordre " + o.getId() + " eksisterer ikke");
             return;

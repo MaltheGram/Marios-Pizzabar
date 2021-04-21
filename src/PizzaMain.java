@@ -32,7 +32,7 @@ public class PizzaMain {
         while (shouldContinueRunning) {
             UI.clear();
             UI.drawHeader();
-            UI.drawOrderlistAndMenu(orderList.getAllOrders(), menu.getAllPizzas());
+            UI.drawOrderlistAndMenu(orderList.getAllOpenOrders(), menu.getAllPizzas());
             System.out.println(UIOptions);
 
             String input = sc.nextLine();
