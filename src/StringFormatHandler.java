@@ -23,8 +23,8 @@ public class StringFormatHandler {
         // modify date to have dots in between
         //var formattedDate =
         var report = "";
-        report += "DAGENS ORDRE RAPPORT "+ date +"\n********************\n";
-        var template = "orderNr: %s, i alt: %s \n";
+        report += "DAGENS ORDRERAPPORT "+ date +"\n********************\n";
+        var template = "ordreNr: %s, i alt: %s \n";
         for(var order : paidOrders) {
             // ordreNr: i alt:
             report += String.format(template, order[0].substring("ORDERNR=".length()), order[2].substring("ORDER_TOTAL=".length()));
