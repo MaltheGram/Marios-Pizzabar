@@ -60,7 +60,7 @@ public class OrderList {
     }
 
     public Collection<Order> getAllOpenOrders() {
-        return this.orders.values();
+        return this.orders.values().stream().sorted().collect(Collectors.toList());
     }
 
     public void changeOrderStatus(String orderNR, Boolean paid) {
