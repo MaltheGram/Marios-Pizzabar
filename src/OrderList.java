@@ -26,7 +26,7 @@ public class OrderList {
         writeOrderToFile(o, dailyLog);
     }
 
-    public Collection<Order> getOrders() {
+    public Collection<Order> getAllOrders() {
         return this.orders.values();
     }
 

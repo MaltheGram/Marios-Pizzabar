@@ -54,7 +54,6 @@ public class PizzaMain {
                 printDailyReport();
             } else if ( input.equalsIgnoreCase("9")) {
                 System.out.println("Lukker...");
-                // TODO: PRINT DAILY REPORT
                 shouldContinueRunning = false;
             }
         }
