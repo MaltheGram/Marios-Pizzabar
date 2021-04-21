@@ -1,0 +1,14 @@
+REMARKS:
+
+
+Error handling:
+
+Has only been done in parts of the code, as per agreement with Nicklas.
+Program is not able to handle situations, where user input is invalid. fx. pizza nr is smaller than 1, or larger than last pizza's nr.
+
+
+Extra feature, that didn't get added, because it wasn't a requirement:
+
+If customer doesn't specify a pick up time, it could have defaulted to one hour ahead.
+Team could have suggested this feature, to nurture a good relationship with the customer,
+in order to get the contract for making a website for him in the future.
